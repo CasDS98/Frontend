@@ -1,6 +1,7 @@
 import React from 'react'
 import useForm from './useForm'
 import validate from './validationInfo'
+import { Link } from 'react-router-dom';
 
 function FormSignup({submitForm}) {
   const {handleChange, values, handleSubmit,errors} = useForm(submitForm, validate)
@@ -66,7 +67,7 @@ function FormSignup({submitForm}) {
                  {errors.password2 && <p>{errors.password2}</p>}
           </div>
           <button className="form-input-btn" type="submit">Sign Up</button>
-          <span className="form-input-login">Already have an account? Login <a href="#">here</a></span>
+          <span className="form-input-login">Already have an account? Login <Link to="/login">here</Link></span>
        </form>
     </div>
   )
