@@ -1,11 +1,17 @@
 import { Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useForm, FormProvider } from "react-hook-form";
+import LabelInput from "../components/LabelInput";
 
 
+//test costum valistaion 
 const existingEmail = async (email) => 
 {
   await(1000);
-  return email === "test@hotmail.com";
+  if(email === "test@hotmail.com")
+  {
+    return true;
+  }
+  return "There is no user with this email.";
 }
 
 const validationRules = {
@@ -18,13 +24,17 @@ const validationRules = {
 
 
 const FormLogin = () => {
-  const {register, handleSubmit,reset,  formState: {errors}} = useForm();
+  const methods = useForm();
+  const {
+    handleSubmit,
+    reset,
+  } = methods;
 
  
   const onSubmit = (data) => {
     //call login api
     console.log(JSON.stringify(data));
-    console.log("errors",errors);
+    //console.log("errors",errors);
     reset();
   };
 
@@ -34,40 +44,31 @@ const FormLogin = () => {
       <img src="/img/chat-svgrepo-com.svg" alt="" className="form-img"></img>
     </div>
     <div className="form-content-right">
-      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+    <FormProvider {...methods}>
+    <form onSubmit={handleSubmit(onSubmit)} className="form">
            <h1>Login by entering email and password below.</h1>
-            
-            {/* EMAIL */}
-          <div className="form-inputs">
-            <label htmlFor="email" className="form-label">Email</label>
-            <input 
-                  {...register("email", validationRules.email)}
-                  id="email"
-                  type="email" 
-                  name="email" 
-                  className="form-input"
-                  placeholder="Enter your email"
-                />
-                  {errors.email && <p>{errors.email.message}</p>}
-                  {errors.email && errors.email.type === "validate" && <p>There is no user with this email.</p>}
-          </div>
-           {/* PASSWORD */}
-           <div className="form-inputs">
-            <label htmlFor="password" className="form-label">Password</label>
-            <input 
-                  {...register("password", validationRules.password)}
-                  id="password"
-                  type="password" 
-                  name="password" 
-                  className="form-input"
-                  placeholder="Enter your password"
-                />
-                {errors.password && <p>{errors.password.message}</p>}
-          </div>
+            <LabelInput
+              label="Email"
+              type="email"
+              placeholder="Enter your email"
+              validation={validationRules.email}
+              data-cy="email_input_login"
+            />
+
+            <LabelInput
+              label="Password"
+              type="password"
+              placeholder="Enter your password"
+              validation={validationRules.password}
+              data-cy="password_input_login"
+            />
+       
+           
             <button className="form-input-btn" type="submit">Login</button>
       
             <span className="form-input-login">Not registered? Register <Link to="/">here</Link></span>
       </form>
+      </FormProvider>
     </div>
   </div>
   )

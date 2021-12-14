@@ -1,0 +1,34 @@
+ <form className="form" onSubmit={handleSubmit(onSubmit)}>
+           <h1>Login by entering email and password below.</h1>
+            
+            {/* EMAIL */}
+          <div className="form-inputs">
+            <label htmlFor="email" className="form-label">Email</label>
+            <input 
+                  {...register("email", validationRules.email)}
+                  id="email"
+                  type="email" 
+                  name="email" 
+                  className="form-input"
+                  placeholder="Enter your email"
+                />
+                  {errors.email && <p>{errors.email.message}</p>}
+                  {errors.email && errors.email.type === "validate" && <p>There is no user with this email.</p>}
+          </div>
+           {/* PASSWORD */}
+           <div className="form-inputs">
+            <label htmlFor="password" className="form-label">Password</label>
+            <input 
+                  {...register("password", validationRules.password)}
+                  id="password"
+                  type="password" 
+                  name="password" 
+                  className="form-input"
+                  placeholder="Enter your password"
+                />
+                {errors.password && <p>{errors.password.message}</p>}
+          </div>
+            <button className="form-input-btn" type="submit">Login</button>
+      
+            <span className="form-input-login">Not registered? Register <Link to="/">here</Link></span>
+      </form>
