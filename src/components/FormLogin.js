@@ -3,8 +3,8 @@ import { useForm, FormProvider } from "react-hook-form";
 import LabelInput from "../components/LabelInput";
 
 
-//test costum valistaion 
-const existingEmail = async (email) => 
+//test costum validation
+/*const existingEmail = async (email) => 
 {
   await(1000);
   if(email === "test@hotmail.com")
@@ -12,12 +12,12 @@ const existingEmail = async (email) =>
     return true;
   }
   return "There is no user with this email.";
-}
+}*/
 
 const validationRules = {
   email: {
     required: "This is required",
-    validate : existingEmail
+    //validate : existingEmail
   },
   password: { required: "This is required" },
 };
