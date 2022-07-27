@@ -1,24 +1,32 @@
 import './App.css';
 import Form from './components/Form';
 import FormLogin from './components/FormLogin';
-import { BrowserRouter } from "react-router-dom";
-import { Switch, Route } from 'react-router-dom'
+import Messages from './pages/Messages'
+import { GroupsProvider } from "./contexts/GroupsProvider";
 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 //Test
 function App() {
   return (
-    <BrowserRouter>
-    <Switch>
-      <div className="App">
-      <Route exact path="/">
-        <Form></Form>
-      </Route>
-      <Route exact path="/login">
-        <FormLogin></FormLogin>
-      </Route>
-      </div>
-    </Switch>
-    </BrowserRouter>
+    <GroupsProvider>
+      <Router>
+        <Switch>
+          <div className="App">
+          <Route exact path="/">
+            <Form></Form>
+          </Route>
+          <Route exact path="/messages">
+            <Messages></Messages>
+          </Route>
+          </div>
+        </Switch>
+      </Router>
+    </GroupsProvider>
   );
 }
 
