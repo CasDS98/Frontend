@@ -4,9 +4,9 @@ module.exports = {
   theme: {
     extend: {
 
-      gridTemplateColumns: {
+      gridTemplateRows: {
         // Simple 16 column grid
-        '1fr': 'repeat(3, 1fr)',
+        'message': '100px 1fr 75px',
       }
     },
   },
