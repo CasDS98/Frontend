@@ -25,9 +25,9 @@ const MessagesList = () => {
     }
 
    return (
-      <>
+      <div class="p-4 space-y-4">
       {allMessages.map((message) => {return <Message key={message.id} {...message}></Message>})}
-      </>
+      </div>
 
    );
 };
