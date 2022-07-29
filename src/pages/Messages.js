@@ -7,9 +7,15 @@ export default function messages() {
  
 
   return (
-    <>
-      <h1>Messages</h1>
-      <GroupList></GroupList>
-    </>
+    <div class="dark:bg-gray-800 grid grid-cols-5">
+      <div class="text-left border dark:border-gray-700">
+        <h1 class="p-6 mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white border-b dark:border-gray-700">Groups</h1>
+        <GroupList></GroupList>
+      </div>
+      <div class="col-span-4">
+        <h1 class="p-6 mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white border-b dark:border-gray-700">Chat</h1>
+        <p>Messages</p>
+      </div>
+    </div>
   );
 }

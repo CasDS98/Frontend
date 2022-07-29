@@ -13,20 +13,22 @@ import {
 //Test
 function App() {
   return (
-    <GroupsProvider>
-      <Router>
-        <Switch>
-          <div className="App">
-          <Route exact path="/">
-            <Form></Form>
-          </Route>
-          <Route exact path="/messages">
-            <Messages></Messages>
-          </Route>
-          </div>
-        </Switch>
-      </Router>
-    </GroupsProvider>
+    <div class="dark">
+      <GroupsProvider>
+        <Router>
+          <Switch>
+            <div className="App">
+            <Route exact path="/">
+              <Form></Form>
+            </Route>
+            <Route exact path="/messages">
+              <Messages></Messages>
+            </Route>
+            </div>
+          </Switch>
+        </Router>
+      </GroupsProvider>
+    </div>
   );
 }
 

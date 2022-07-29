@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 @layer utilities{
    .w-px-1000{
       width : 1000px;
@@ -80,3 +82,4 @@
  .form-input-login a {
     @apply no-underline text-indigo-400 font-semibold; 
  }
+

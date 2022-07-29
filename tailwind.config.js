@@ -1,8 +1,14 @@
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+
+      gridTemplateColumns: {
+        // Simple 16 column grid
+        '1fr': 'repeat(3, 1fr)',
+      }
+    },
   },
   variants: {
     extend: {},

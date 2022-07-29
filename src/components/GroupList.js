@@ -1,5 +1,6 @@
 import React, { useContext, useMemo } from "react";
 import { GroupsContext } from "../contexts/GroupsProvider";
+import Group from "./Group"
 
 const GroupList = () => {
    const { groups, error, loading } = useContext(GroupsContext);
@@ -25,8 +26,7 @@ const GroupList = () => {
 
    return (
       <>
-      <h1> this is a group </h1>
-      <p>{allGroups.map((group) => {return <p>id: {group.id} , name : {group.name}</p>})}</p>
+      {allGroups.map((group) => {return <Group key={group.id} {...group}></Group>})}
       </>
 
    );
