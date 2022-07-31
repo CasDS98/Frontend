@@ -2,12 +2,14 @@ import React, { useContext, useMemo } from "react";
 import { MessagesContext } from "../contexts/MessagesProvider";
 import Message from "./Message";
 
-const MessagesList = () => {
+const MessagesList =  () => {
    const { messages, error, loading } = useContext(MessagesContext);
-
+   
    const allMessages = useMemo(() => {
       return messages
     }, [messages]);
+
+
   
     if (loading) return <h1 data-cy="loading">Loading...</h1>;
     if (error)
@@ -25,8 +27,8 @@ const MessagesList = () => {
     }
 
    return (
-      <div class="p-4 space-y-4">
-      {allMessages.map((message) => {return <Message key={message.id} {...message}></Message>})}
+      <div class="p-4 space-y-4 text-left border-b dark:border-gray-700">
+        {allMessages.map((message) => {return <Message key={message.id} {...message}></Message>})}
       </div>
 
    );

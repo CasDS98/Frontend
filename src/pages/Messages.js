@@ -4,28 +4,36 @@
 //import TransactionList from "../components/TransactionList";
 import GroupList from "../components/GroupList";
 import MessageList from "../components/MessageList";
+import MessageForm from "../components/MessageForm";
+
 
 export default function messages() {
  
 
   return (
-    <div class="min-h-full">
-      <div class="dark:bg-gray-800 gap-0 grid grid-cols-5 grid-rows-message min-h-screen">
+    <div class>
+      <div class="dark:bg-gray-800 gap-0 grid grid-cols-5 grid-rows-message min-h-screen h-screen">
         <h1 class="text-left p-6 mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white border-b border-r dark:border-gray-700">Groups</h1>
         <h1 class="text-left col-span-3 p-6 mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white border-b dark:border-gray-700">Chat</h1>
         <div class="dark:text-white dark:border-gray-700"></div>
+
         <div class="text-left border-b border-r dark:border-gray-700">
           <GroupList></GroupList>
         </div>
         
-        <div class="col-span-3 text-left border-b dark:border-gray-700">
+       
+      <div id="message-list" class="scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-600 overflow-y-scroll col-span-3">
           <MessageList></MessageList>
-        </div>
+      </div>
+
+        
         
         <div class="dark:text-white dark:border-gray-700"></div>
         <div class="dark:text-white dark:border-gray-700"></div>
-        <div class="align-bottom dark:text-white dark:border-gray-700">ENTER MESSAGE</div>
+        <div class="col-span-4">
+          <MessageForm></MessageForm>
+        </div>
       </div>
-      </div>
+    </div>
   );
 } 

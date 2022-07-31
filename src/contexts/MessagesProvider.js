@@ -19,14 +19,15 @@ export const MessagesProvider = ({ children }) => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [currentMessage, setCurrentMessage] = useState({});
-  const [groupId, setGroupId] = useState();
+  const [selectedGroupId, setSelectedGroupId] = useState();
 
   const refreshMessages = useCallback(async () => {
     try {
+      console.log(`Refresh messages ${selectedGroupId}`);
       setError();
       setLoading(true);
       const { data } = await axios.get(
-        `${config.base_url}messages/${groupId}`
+        `${config.base_url}messages/${selectedGroupId}`
       );
       setMessages(data.data);
     } catch (error) {
@@ -34,7 +35,7 @@ export const MessagesProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  }, [groupId]);
+  }, [selectedGroupId]);
 
   useEffect(() => {
     if (!initialLoad) {
@@ -46,9 +47,41 @@ export const MessagesProvider = ({ children }) => {
   
   const setCurrentGroup = useCallback(async(groupId) => 
   {
-    setGroupId(groupId);
-    await refreshMessages();
-  },[refreshMessages]);
+    setSelectedGroupId(groupId);
+  },[]);
+
+  useEffect(() => {
+     refreshMessages();
+}, [selectedGroupId,refreshMessages]);
+
+  const createMessage = useCallback(
+    async ({ user_id, group_id, message}) => {
+      setError();
+      setLoading(true);
+      let data = {
+        user_id,
+        group_id,
+        message,
+      };
+      let method = "post";
+      let url = `${config.base_url}messages`;
+      try {
+        const { changedMessage } = await axios({
+          method,
+          url,
+          data,
+        });
+        await refreshMessages();
+        return changedMessage;
+      } catch (error) {
+        console.log(error);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [refreshMessages]
+  );
 
 
   const value = useMemo(
@@ -57,8 +90,9 @@ export const MessagesProvider = ({ children }) => {
     error,
     loading,
     currentMessage,
-    setCurrentGroup
-   // createOrUpdateGroup,
+    setCurrentGroup,
+    createMessage,
+    selectedGroupId
    // deleteGroup,
     //setGroupToUpdate,
   }),
@@ -67,8 +101,9 @@ export const MessagesProvider = ({ children }) => {
     error,
     loading,
     currentMessage,
-    setCurrentGroup
-   // createOrUpdateGroup,
+    setCurrentGroup,
+    createMessage,
+    selectedGroupId
    // deleteGroup,
     //setGroupToUpdate,
   ]

@@ -1,12 +1,11 @@
 import { memo, useCallback, useContext } from "react";
 import { MessagesContext } from "../contexts/MessagesProvider";
-import { Link } from "react-router-dom";
 
 const Group = memo(({ id, name})  => {
   const {setCurrentGroup} = useContext(MessagesContext);
   //function to set groupId in messages
   const setGroupId = useCallback(() => {
-    console.log(id);
+    console.log(`Group selected : ${id}`);
     setCurrentGroup(id);
 	}, [id, setCurrentGroup]);
 

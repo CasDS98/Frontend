@@ -44,6 +44,15 @@ export const GroupsProvider = ({ children }) => {
       }
     }, [initialLoad, refreshGroups]);
   
+    const setGroupToUpdate = useCallback(
+      (id) => {
+        setCurrentGroup(
+          id === null ? {} : groups.find((t) => t.id === id)
+        );
+      },
+      [groups]
+    );
+
 
     const value = useMemo(
       () => ({
@@ -53,7 +62,7 @@ export const GroupsProvider = ({ children }) => {
       currentGroup,
      // createOrUpdateGroup,
      // deleteGroup,
-      //setGroupToUpdate,
+      setGroupToUpdate,
     }),
     [
       groups,
@@ -62,7 +71,7 @@ export const GroupsProvider = ({ children }) => {
       currentGroup,
      // createOrUpdateGroup,
      // deleteGroup,
-      //setGroupToUpdate,
+      setGroupToUpdate,
     ]
   );
 
