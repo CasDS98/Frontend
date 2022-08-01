@@ -53,6 +53,33 @@ export const GroupsProvider = ({ children }) => {
       [groups]
     );
 
+    const createGroup = useCallback(
+      async ({name}) => {
+        setError();
+        setLoading(true);
+        let data = {
+          name
+        };
+        let method = "post";
+        let url = `${config.base_url}groups`;
+        try {
+          const { changedMessage } = await axios({
+            method,
+            url,
+            data,
+          });
+          await refreshGroups();
+          return changedMessage;
+        } catch (error) {
+          console.log(error);
+          throw error;
+        } finally {
+          setLoading(false);
+        }
+      },
+      [refreshGroups]
+    );
+
 
     const value = useMemo(
       () => ({
@@ -60,7 +87,7 @@ export const GroupsProvider = ({ children }) => {
       error,
       loading,
       currentGroup,
-     // createOrUpdateGroup,
+      createGroup,
      // deleteGroup,
       setGroupToUpdate,
     }),
@@ -69,7 +96,7 @@ export const GroupsProvider = ({ children }) => {
       error,
       loading,
       currentGroup,
-     // createOrUpdateGroup,
+      createGroup,
      // deleteGroup,
       setGroupToUpdate,
     ]
