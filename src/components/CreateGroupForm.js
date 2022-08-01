@@ -11,7 +11,8 @@ const CreateGroupForm = ()  => {
   } = methods;
 
   const {
-    createGroup
+    createGroup,
+    addMember
   } = useGroups();
 
 
@@ -19,16 +20,24 @@ const CreateGroupForm = ()  => {
     async (data) => {
       try {
         console.log(data);
-        await createGroup({
-          name: data.groupName
+        const group = await createGroup({
+          name : data.groupName
         });
+       
+        await addMember({
+          group_id : group.data.id,
+          user_id : "23c1d4bb-2452-408c-b380-b61beed3d046"
+        });
+        
         reset();
       } catch (error) {
         console.error(error);
       }
     },
     [
-      createGroup,reset
+      createGroup,
+      reset,
+      addMember
     ]
   );
 

@@ -63,13 +63,39 @@ export const GroupsProvider = ({ children }) => {
         let method = "post";
         let url = `${config.base_url}groups`;
         try {
-          const { changedMessage } = await axios({
+          const group = await axios({
+            method,
+            url,
+            data,
+          });
+
+          return group;
+        } catch (error) {
+          console.log(error);
+          throw error;
+        } finally {
+          setLoading(false);
+        }
+      },
+      []
+    );
+
+    const addMember = useCallback(
+      async ({group_id, user_id}) => {
+        setError();
+        setLoading(true);
+        let data = {
+          user_id
+        };
+        let method = "post";
+        let url = `${config.base_url}groups/members/${group_id}`;
+        try {
+          await axios({
             method,
             url,
             data,
           });
           await refreshGroups();
-          return changedMessage;
         } catch (error) {
           console.log(error);
           throw error;
@@ -90,6 +116,7 @@ export const GroupsProvider = ({ children }) => {
       createGroup,
      // deleteGroup,
       setGroupToUpdate,
+      addMember
     }),
     [
       groups,
@@ -99,6 +126,7 @@ export const GroupsProvider = ({ children }) => {
       createGroup,
      // deleteGroup,
       setGroupToUpdate,
+      addMember
     ]
   );
 

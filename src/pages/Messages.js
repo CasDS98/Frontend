@@ -18,7 +18,7 @@ export default function messages() {
         <h1 class="text-left col-span-3 p-6 mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white border-b dark:border-gray-700">Chat</h1>
         <div class="dark:text-white dark:border-gray-700"></div>
 
-        <div class="text-left border-b border-r dark:border-gray-700">
+        <div id="group-list" class="text-left border-b border-r dark:border-gray-700 scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-600 overflow-y-scroll">
           <GroupList></GroupList>
         </div>
         

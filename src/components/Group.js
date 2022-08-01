@@ -1,4 +1,4 @@
-import { memo, useCallback, useContext } from "react";
+import { useEffect, memo, useCallback, useContext } from "react";
 import { MessagesContext } from "../contexts/MessagesProvider";
 
 const Group = memo(({ id, name})  => {
