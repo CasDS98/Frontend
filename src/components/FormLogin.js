@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useForm, FormProvider } from "react-hook-form";
 import LabelInput from "../components/LabelInput";
-
+import { useCallback, useEffect } from "react";
+import { useLogin, useSession } from '../contexts/AuthProvider';
 
 //test costum validation
 /*const existingEmail = async (email) => 
@@ -24,6 +25,9 @@ const validationRules = {
 
 
 const FormLogin = () => {
+  const history = useHistory();
+  const { loading, error, isAuthed  } = useSession();
+  const login = useLogin();
   const methods = useForm();
   const {
     handleSubmit,
@@ -31,12 +35,23 @@ const FormLogin = () => {
   } = methods;
 
  
-  const onSubmit = (data) => {
-    //call login api
-    console.log(JSON.stringify(data));
-    //console.log("errors",errors);
+  const onSubmit  = useCallback(async ({ email, password }) => {
+		const success = await login(email, password);
+    console.log(success);
+    if (success) {
+			history.replace('/');
+		}
+
     reset();
-  };
+		
+	}, [reset, login, history]);
+
+  useEffect(() => {
+		if (isAuthed) {
+			history.replace('/');
+		}
+	}, [isAuthed, history]);
+
 
   return (
     <div className="form-container">
@@ -47,8 +62,15 @@ const FormLogin = () => {
     <FormProvider {...methods}>
     <form onSubmit={handleSubmit(onSubmit)} className="form">
            <h1>Login by entering email and password below.</h1>
+           {
+						error ? (
+							<p className="text-red-500">
+								{error}
+							</p>
+						) : null
+					}
             <LabelInput
-              label="Email"
+              label="email"
               type="email"
               placeholder="Enter your email"
               validation={validationRules.email}
@@ -56,7 +78,7 @@ const FormLogin = () => {
             />
 
             <LabelInput
-              label="Password"
+              label="password"
               type="password"
               placeholder="Enter your password"
               validation={validationRules.password}
@@ -64,7 +86,7 @@ const FormLogin = () => {
             />
        
            
-            <button className="form-input-btn" type="submit">Login</button>
+            <button className="form-input-btn" disabled={loading} type="submit">Login</button>
       
             <span className="form-input-login">Not registered? Register <Link to="/">here</Link></span>
       </form>

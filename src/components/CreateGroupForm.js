@@ -19,13 +19,13 @@ const CreateGroupForm = ()  => {
   const onSubmit = useCallback(
     async (data) => {
       try {
-        console.log(data);
+
         const group = await createGroup({
           name : data.groupName
         });
        
         await addMember({
-          group_id : group.data.id,
+          group_id : group.id,
           user_id : "23c1d4bb-2452-408c-b380-b61beed3d046"
         });
         

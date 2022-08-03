@@ -4,6 +4,8 @@ import FormLogin from './components/FormLogin';
 import Messages from './pages/Messages'
 import { GroupsProvider } from "./contexts/GroupsProvider";
 import { MessagesProvider } from "./contexts/MessagesProvider";
+import { AuthProvider } from "./contexts/AuthProvider";
+import PrivateRoute from './components/PrivateRoute';
 
 import {
   BrowserRouter as Router,
@@ -15,22 +17,30 @@ import {
 function App() {
   return (
     <div class="dark">
-      <GroupsProvider>
-        <MessagesProvider>
-          <Router>
-            <Switch>
-              <div className="App">
-              <Route exact path="/">
-                <Form></Form>
-              </Route>
-              <Route exact path="/messages">
-                <Messages></Messages>
-              </Route>
-              </div>
-            </Switch>
-          </Router>
-        </MessagesProvider>
-      </GroupsProvider>
+      <AuthProvider>
+        <GroupsProvider>
+          <MessagesProvider>
+            <Router>
+              <Switch>
+                <div className="App">
+                <Route path="/" exact>
+                  <Redirect to="/messages" />
+                </Route>
+                <Route exact path="/register">
+                  <Form></Form>
+                </Route>
+                <Route exact path="/login">
+                  <FormLogin></FormLogin>
+                </Route>
+                <PrivateRoute  exact path="/messages">
+                  <Messages></Messages>
+                </PrivateRoute >
+                </div>
+              </Switch>
+            </Router>
+          </MessagesProvider>
+        </GroupsProvider>
+      </AuthProvider>
     </div>
   );
 }

@@ -7,8 +7,9 @@ import {
   useMemo,
   useContext,
 } from "react";
-import axios from "axios";
-import config from "../config.json";
+
+import * as groupsApi from '../api/groups';
+import { useSession } from './AuthProvider';
 
 export const GroupsContext = createContext();
 export const useGroups = () => useContext(GroupsContext);
@@ -19,6 +20,7 @@ export const GroupsProvider = ({ children }) => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [currentGroup, setCurrentGroup] = useState({});
+  const { ready: authReady } = useSession();
 
 
 
@@ -26,10 +28,8 @@ export const GroupsProvider = ({ children }) => {
       try {
         setError();
         setLoading(true);
-        const { data } = await axios.get(
-          `${config.base_url}groups/23c1d4bb-2452-408c-b380-b61beed3d046`
-        );
-        setGroups(data);
+        const groups = await groupsApi.getAllGroups("23c1d4bb-2452-408c-b380-b61beed3d046");
+        setGroups(groups);
       } catch (error) {
         setError(error);
       } finally {
@@ -38,11 +38,11 @@ export const GroupsProvider = ({ children }) => {
     }, []);
   
     useEffect(() => {
-      if (!initialLoad) {
+      if (authReady && !initialLoad) {
         refreshGroups();
         setInitialLoad(true);
       }
-    }, [initialLoad, refreshGroups]);
+    }, [initialLoad, refreshGroups, authReady]);
   
     const setGroupToUpdate = useCallback(
       (id) => {
@@ -57,17 +57,8 @@ export const GroupsProvider = ({ children }) => {
       async ({name}) => {
         setError();
         setLoading(true);
-        let data = {
-          name
-        };
-        let method = "post";
-        let url = `${config.base_url}groups`;
         try {
-          const group = await axios({
-            method,
-            url,
-            data,
-          });
+          const group = groupsApi.saveGroup({name})
 
           return group;
         } catch (error) {
@@ -84,17 +75,8 @@ export const GroupsProvider = ({ children }) => {
       async ({group_id, user_id}) => {
         setError();
         setLoading(true);
-        let data = {
-          user_id
-        };
-        let method = "post";
-        let url = `${config.base_url}groups/members/${group_id}`;
         try {
-          await axios({
-            method,
-            url,
-            data,
-          });
+          await groupsApi.addMember({group_id, user_id});
           await refreshGroups();
         } catch (error) {
           console.log(error);

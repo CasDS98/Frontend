@@ -7,8 +7,9 @@ import {
   useMemo,
   useContext,
 } from "react";
-import axios from "axios";
-import config from "../config.json";
+
+import * as messagesApi from '../api/messages';
+import { useSession } from './AuthProvider';
 
 export const MessagesContext = createContext();
 export const useMessages = () => useContext(MessagesContext);
@@ -20,16 +21,15 @@ export const MessagesProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [currentMessage, setCurrentMessage] = useState({});
   const [selectedGroupId, setSelectedGroupId] = useState();
+  const { ready: authReady } = useSession();
 
   const refreshMessages = useCallback(async () => {
     try {
       console.log(`Refresh messages ${selectedGroupId}`);
       setError();
       setLoading(true);
-      const { data } = await axios.get(
-        `${config.base_url}messages/${selectedGroupId}`
-      );
-      setMessages(data.data);
+      const { data } = await messagesApi.getAllMessages(selectedGroupId);
+      setMessages(data);
     } catch (error) {
       setError(error);
     } finally {
@@ -38,11 +38,11 @@ export const MessagesProvider = ({ children }) => {
   }, [selectedGroupId]);
 
   useEffect(() => {
-    if (!initialLoad) {
+    if (authReady && !initialLoad) {
       refreshMessages();
       setInitialLoad(true);
     }
-  }, [initialLoad, refreshMessages]);
+  }, [initialLoad, refreshMessages, authReady]);
 
   
   const setCurrentGroup = useCallback(async(groupId) => 
@@ -58,19 +58,10 @@ export const MessagesProvider = ({ children }) => {
     async ({ user_id, group_id, message}) => {
       setError();
       setLoading(true);
-      let data = {
-        user_id,
-        group_id,
-        message,
-      };
-      let method = "post";
-      let url = `${config.base_url}messages`;
       try {
-        const { changedMessage } = await axios({
-          method,
-          url,
-          data,
-        });
+        const { changedMessage } = await messagesApi.saveMessage({ user_id,
+          group_id,
+          message,});
         await refreshMessages();
         return changedMessage;
       } catch (error) {
