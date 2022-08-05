@@ -1,5 +1,6 @@
 import './App.css';
 import Form from './components/Form';
+import NavMenu from './components/NavMenu.js';
 import FormLogin from './components/FormLogin';
 import Messages from './pages/Messages'
 import { GroupsProvider } from "./contexts/GroupsProvider";
@@ -21,6 +22,7 @@ function App() {
         <GroupsProvider>
           <MessagesProvider>
             <Router>
+              <NavMenu/>
               <Switch>
                 <div className="App">
                 <Route path="/" exact>

@@ -7,7 +7,11 @@ module.exports = {
       gridTemplateRows: {
         // Simple 16 column grid
         'message': '100px 1fr 75px',
-      }
+      },
+
+      height: theme => ({
+        "screen-custom": "87vh",
+      }),
     },
   },
   variants: {

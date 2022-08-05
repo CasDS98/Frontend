@@ -1,10 +1,13 @@
 import { useForm, FormProvider } from "react-hook-form";
-import { useContext, useEffect, useCallback } from "react";
+import {useCallback } from "react";
 import LabelInput from "../components/LabelInput";
 import { useGroups } from "../contexts/GroupsProvider";
+import { useSession } from '../contexts/AuthProvider';
 
 const CreateGroupForm = ()  => {
   const methods = useForm();
+  const { user } = useSession();
+
   const {
     handleSubmit,
     reset
@@ -26,7 +29,7 @@ const CreateGroupForm = ()  => {
        
         await addMember({
           group_id : group.id,
-          user_id : "23c1d4bb-2452-408c-b380-b61beed3d046"
+          user_id : user.id
         });
         
         reset();
@@ -37,7 +40,8 @@ const CreateGroupForm = ()  => {
     [
       createGroup,
       reset,
-      addMember
+      addMember,
+      user
     ]
   );
 

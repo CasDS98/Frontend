@@ -63,6 +63,7 @@ export const AuthProvider = ({
 		const expiry = parseExp(exp);
 		const stillValid = expiry >= new Date();
 
+		console.log("test")
 		if (stillValid) {
 			localStorage.setItem(JWT_TOKEN_KEY, token);
 		} else {

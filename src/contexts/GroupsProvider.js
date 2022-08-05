@@ -20,22 +20,27 @@ export const GroupsProvider = ({ children }) => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [currentGroup, setCurrentGroup] = useState({});
-  const { ready: authReady } = useSession();
-
+  const { ready: authReady, user } = useSession();
+  const [members, setMembers] = useState({});
 
 
     const refreshGroups = useCallback(async () => {
       try {
         setError();
         setLoading(true);
-        const groups = await groupsApi.getAllGroups("23c1d4bb-2452-408c-b380-b61beed3d046");
+        console.log("Refresh groups");
+        const groups = await groupsApi.getAllGroups(user.id);
         setGroups(groups);
       } catch (error) {
         setError(error);
       } finally {
         setLoading(false);
       }
-    }, []);
+    }, [user]);
+    
+    useEffect(() => {
+      setInitialLoad(false);
+    }, [user]);
   
     useEffect(() => {
       if (authReady && !initialLoad) {
@@ -43,14 +48,33 @@ export const GroupsProvider = ({ children }) => {
         setInitialLoad(true);
       }
     }, [initialLoad, refreshGroups, authReady]);
+
+    const refreshMembers = useCallback(async () => {
+      try {
+        setError();
+        setLoading(true);
+        const members = await groupsApi.getMembers(currentGroup.id);
+        setMembers(members);
+        console.log(members);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    }, [currentGroup.id]);
+
+    useEffect(() => {
+      refreshMembers();
+ }, [currentGroup,refreshMembers]);
   
     const setGroupToUpdate = useCallback(
       (id) => {
         setCurrentGroup(
           id === null ? {} : groups.find((t) => t.id === id)
         );
+        refreshMembers();
       },
-      [groups]
+      [groups,refreshMembers]
     );
 
     const createGroup = useCallback(
@@ -88,6 +112,42 @@ export const GroupsProvider = ({ children }) => {
       [refreshGroups]
     );
 
+    const deleteMember = useCallback(
+      async (group_id, user_id) => {
+        setError();
+        setLoading(true);
+        try {
+          await groupsApi.deleteMember({group_id, user_id});
+          await refreshGroups();
+          await refreshMembers();
+        } catch (error) {
+          console.log(error);
+          throw error;
+        } finally {
+          setLoading(false);
+        }
+      },
+      [refreshGroups,refreshMembers]
+    );
+
+    const deleteGroup = useCallback(
+      async (group_id) => {
+        setError();
+        setLoading(true);
+        try {
+          await groupsApi.deleteGroup(group_id);
+          await refreshGroups();
+        } catch (error) {
+          console.log(error);
+          throw error;
+        } finally {
+          setLoading(false);
+        }
+      },
+      [refreshGroups]
+    );
+
+    
 
     const value = useMemo(
       () => ({
@@ -96,9 +156,11 @@ export const GroupsProvider = ({ children }) => {
       loading,
       currentGroup,
       createGroup,
-     // deleteGroup,
+      deleteGroup,
       setGroupToUpdate,
-      addMember
+      addMember,
+      deleteMember,
+      members
     }),
     [
       groups,
@@ -106,9 +168,11 @@ export const GroupsProvider = ({ children }) => {
       loading,
       currentGroup,
       createGroup,
-     // deleteGroup,
+      deleteGroup,
       setGroupToUpdate,
-      addMember
+      addMember,
+      deleteMember,
+      members
     ]
   );
 

@@ -24,7 +24,17 @@ export const saveGroup = async ({
 };
 
 export const deleteGroup = async (id) => {
-	
+	await axios.delete(`groups/${id}`);
+};
+
+export const deleteMember = async ({group_id, user_id}) => {
+	await axios({
+		method: 'delete',
+    url : `groups/members/${group_id}`,
+		data: {
+			user_id
+		},
+	});
 };
 
 export const addMember = async ({
@@ -38,5 +48,14 @@ export const addMember = async ({
 			user_id,
 		},
 	});
+	return data;
+};
+
+export const getMembers= async (group_id) => {
+
+	const { data } = await axios.get(
+		`groups/members/${group_id}`
+	);
+
 	return data;
 };
