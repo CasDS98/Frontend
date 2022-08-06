@@ -3,6 +3,7 @@ import MessageList from "../components/MessageList";
 import MemberList from "../components/MemberList";
 import MessageForm from "../components/MessageForm";
 import CreateGroupForm from "../components/CreateGroupForm";
+import AddMemberList from "../components/AddMemberList";
 
 
 export default function messages() {
@@ -26,8 +27,14 @@ export default function messages() {
 
         
         
-        <div class="p-6 dark:text-white dark:border-gray-700">
-        <MemberList></MemberList>
+       <div class="grid row-span-2 grid-rows-2 p-6  dark:text-white dark:border-gray-700">
+          <div>
+              <MemberList></MemberList>
+          </div>
+        <div>
+          <h1 class="text-left p-6 mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white border-b border-r dark:border-gray-700">Add Members</h1>
+            <AddMemberList></AddMemberList>
+        </div>
         </div>
         <div class="dark:text-white dark:border-gray-700">
           <CreateGroupForm></CreateGroupForm>

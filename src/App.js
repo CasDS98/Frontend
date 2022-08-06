@@ -6,6 +6,8 @@ import Messages from './pages/Messages'
 import { GroupsProvider } from "./contexts/GroupsProvider";
 import { MessagesProvider } from "./contexts/MessagesProvider";
 import { AuthProvider } from "./contexts/AuthProvider";
+import { FriendsProvider } from "./contexts/FriendsProvider";
+import { UsersProvider } from "./contexts/UsersProvider";
 import PrivateRoute from './components/PrivateRoute';
 
 import {
@@ -21,25 +23,29 @@ function App() {
       <AuthProvider>
         <GroupsProvider>
           <MessagesProvider>
-            <Router>
-              <NavMenu/>
-              <Switch>
-                <div className="App">
-                <Route path="/" exact>
-                  <Redirect to="/messages" />
-                </Route>
-                <Route exact path="/register">
-                  <Form></Form>
-                </Route>
-                <Route exact path="/login">
-                  <FormLogin></FormLogin>
-                </Route>
-                <PrivateRoute  exact path="/messages">
-                  <Messages></Messages>
-                </PrivateRoute >
-                </div>
-              </Switch>
-            </Router>
+            <FriendsProvider>
+              <UsersProvider>
+                <Router>
+                  <NavMenu/>
+                  <Switch>
+                    <div className="App">
+                    <Route path="/" exact>
+                      <Redirect to="/messages" />
+                    </Route>
+                    <Route exact path="/register">
+                      <Form></Form>
+                    </Route>
+                    <Route exact path="/login">
+                      <FormLogin></FormLogin>
+                    </Route>
+                    <PrivateRoute  exact path="/messages">
+                      <Messages></Messages>
+                    </PrivateRoute >
+                    </div>
+                  </Switch>
+                </Router>
+              </UsersProvider>
+            </FriendsProvider>
           </MessagesProvider>
         </GroupsProvider>
       </AuthProvider>

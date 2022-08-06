@@ -41,11 +41,13 @@ export const addMember = async ({
 	group_id,
 	user_id,
 }) => {
+	console.log(group_id);
+	console.log(user_id);
 	const { data } = await axios({
 		method: 'post',
     url : `groups/members/${group_id}`,
 		data: {
-			user_id,
+		  user_id,
 		},
 	});
 	return data;

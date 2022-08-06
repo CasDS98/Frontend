@@ -1,7 +1,8 @@
 import { useMessages } from "../contexts/MessagesProvider";
 import { useCallback, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import LabelInput from "./LabelInput";;
+import LabelInput from "./LabelInput";
+import { useSession } from '../contexts/AuthProvider';
 
 const validationRules = {
   message: {
@@ -11,7 +12,7 @@ const validationRules = {
 };
 
 const MessageForm = ()  => {
-  //const [message, setMessage] = useState('');
+  const { user } = useSession();
 
   const methods = useForm();
   const {
@@ -30,7 +31,7 @@ const MessageForm = ()  => {
       try {
         console.log(data);
         await createMessage({
-          user_id: "23c1d4bb-2452-408c-b380-b61beed3d046",
+          user_id: user.id,
           group_id: selectedGroupId,
           message: data.message,
         });
