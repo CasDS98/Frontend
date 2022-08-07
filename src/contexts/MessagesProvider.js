@@ -11,6 +11,7 @@ import {
 import * as messagesApi from '../api/messages';
 import { useSession } from './AuthProvider';
 import { useSocket } from "../contexts/SocketProvider";
+import { useGroups } from "../contexts/GroupsProvider";
 
 export const MessagesContext = createContext();
 export const useMessages = () => useContext(MessagesContext);
@@ -24,20 +25,21 @@ export const MessagesProvider = ({ children }) => {
   const [selectedGroupId, setSelectedGroupId] = useState();
   const { ready: authReady } = useSession();
   const {sendMessage, socket, isConnected} = useSocket();
+  const {currentGroup} = useGroups();
 
   const refreshMessages = useCallback(async () => {
     try {
-      console.log(`Refresh messages ${selectedGroupId}`);
+      console.log(`Refresh messages ${currentGroup.id}`);
       setError();
       setLoading(true);
-      const { data } = await messagesApi.getAllMessages(selectedGroupId);
+      const { data } = await messagesApi.getAllMessages(currentGroup.id);
       setMessages(data);
     } catch (error) {
       setError(error);
     } finally {
       setLoading(false);
     }
-  }, [selectedGroupId]);
+  }, [currentGroup.id]);
 
   useEffect(() => {
     if (authReady && !initialLoad) {
@@ -49,13 +51,18 @@ export const MessagesProvider = ({ children }) => {
   
   const setCurrentGroup = useCallback(async(groupId) => 
   {
+    console.log("current groupid")
+    console.log(groupId)
     setSelectedGroupId(groupId);
-    refreshMessages();
-  },[refreshMessages]);
+   
+  },[]);
 
- // useEffect(() => {
-   //  refreshMessages();
-//}, [selectedGroupId,refreshMessages]);
+  useEffect(() => {
+    if(authReady)
+    {
+     refreshMessages();
+    }
+   }, [currentGroup,refreshMessages,authReady]);
 
   const createMessage = useCallback(
     async ({ user_id, group_id, message}) => {
@@ -77,7 +84,7 @@ export const MessagesProvider = ({ children }) => {
         setLoading(false);
       }
     },
-    [sendMessage, messages]
+    [sendMessage,messages]
   );
 
   useEffect(() => {
