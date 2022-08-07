@@ -3,6 +3,7 @@ import Form from './components/Form';
 import NavMenu from './components/NavMenu.js';
 import FormLogin from './components/FormLogin';
 import Messages from './pages/Messages'
+import Friends from './pages/Friends'
 import { GroupsProvider } from "./contexts/GroupsProvider";
 import { MessagesProvider } from "./contexts/MessagesProvider";
 import { AuthProvider } from "./contexts/AuthProvider";
@@ -46,6 +47,9 @@ function App() {
                       </Route>
                       <PrivateRoute  exact path="/messages">
                         <Messages></Messages>
+                      </PrivateRoute >
+                      <PrivateRoute  exact path="/friends">
+                        <Friends></Friends>
                       </PrivateRoute >
                       </div>
                     </Switch>

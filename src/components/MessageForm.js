@@ -45,6 +45,7 @@ const MessageForm = ()  => {
       createMessage,
       selectedGroupId,
       reset,
+      user
      // message
     ]
   );

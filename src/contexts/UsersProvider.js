@@ -24,7 +24,6 @@ export const UsersProvider = ({ children }) => {
       setLoading(true);
       try {
         const user = await userApi.getUser(id);
-        console.log(user);
         return user;
       } catch (error) {
         console.log(error);

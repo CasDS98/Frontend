@@ -4,21 +4,10 @@ import LabelInput from "../components/LabelInput";
 import { useCallback, useEffect } from "react";
 import { useLogin, useSession } from '../contexts/AuthProvider';
 
-//test costum validation
-/*const existingEmail = async (email) => 
-{
-  await(1000);
-  if(email === "test@hotmail.com")
-  {
-    return true;
-  }
-  return "There is no user with this email.";
-}*/
 
 const validationRules = {
   email: {
-    required: "This is required",
-    //validate : existingEmail
+    required: "This is required"
   },
   password: { required: "This is required" },
 };
@@ -88,7 +77,7 @@ const FormLogin = () => {
            
             <button className="form-input-btn" disabled={loading} type="submit">Login</button>
       
-            <span className="form-input-login">Not registered? Register <Link to="/">here</Link></span>
+            <span className="form-input-login">Not registered? Register <Link to="/register">here</Link></span>
       </form>
       </FormProvider>
     </div>

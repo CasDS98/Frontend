@@ -1,9 +1,23 @@
-import {useEffect, memo, useCallback, useContext } from "react";
+import {useEffect, memo,useState } from "react";
 import { useSession } from '../contexts/AuthProvider';
-
+import {useUsers} from '../contexts/UsersProvider';
 
 const Message = memo(({ id, date_time, name, user, group, value})  => {
   const { user : userAuth,loading,error } = useSession();
+  const { getUser } = useUsers();
+  const [userInfo, setUserInfo] = useState("")
+
+
+
+
+  useEffect( () => {
+    const fetchUser = async () => {
+      const u = await getUser(user);
+      setUserInfo(u);
+    }
+    fetchUser();
+   },[setUserInfo, getUser, user])
+
    
 
   useEffect(() => {
@@ -31,7 +45,6 @@ const Message = memo(({ id, date_time, name, user, group, value})  => {
         { 
           userAuth.id === user ? (
             <div class="text-right">
-            <p class=" text-xs dark:text-gray-300 ">{user}</p>
             <div class="p-2.5 inline-block text-sm text-gray-700 bg-gray-100 rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 dark:text-white" role="alert">
               <p class="break-all">{value}</p>
             </div>
@@ -39,7 +52,7 @@ const Message = memo(({ id, date_time, name, user, group, value})  => {
           </div>
           ) : (
             <div class="text-left">
-            <p class=" text-xs dark:text-gray-300 ">{user}</p>
+            <p class=" text-xs dark:text-gray-300 ">{userInfo.user_name}</p>
             <div class="p-2.5 inline-block text-sm text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-700 dark:text-white" role="alert">
               <p class="break-all">{value}</p>
             </div>

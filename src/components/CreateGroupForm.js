@@ -27,10 +27,10 @@ const CreateGroupForm = ()  => {
           name : data.groupName
         });
        
-        await addMember({
-          group_id : group.id,
-          user_id : user.id
-        });
+        await addMember(
+          group.id,
+          user.id
+        );
         
         reset();
       } catch (error) {

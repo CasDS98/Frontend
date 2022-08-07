@@ -2,17 +2,10 @@ import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import LabelInput from "../components/LabelInput";
 import { Link } from 'react-router-dom';
+import { useRegister } from '../contexts/AuthProvider';
+import { useHistory } from 'react-router-dom';
 
 let password2='';
-const existingEmail = async (email) => 
-{
-  await(1000);
-  if(email === "test@hotmail.com")
-  {
-    return true;
-  }
-  return "There is no user with this email.";
-}
 
 const passwordMatch = async (password) => 
 {
@@ -38,7 +31,6 @@ const validationRules = {
   },
   email: {
     required: "Email is required",
-    validate : existingEmail
   },
   password: 
   {
@@ -53,7 +45,8 @@ const validationRules = {
 };
 
 function FormSignup() {
- 
+  const  register  = useRegister();
+  const history = useHistory();
 
   const methods = useForm();
   const {
@@ -65,8 +58,20 @@ function FormSignup() {
   const onSubmit = (data) => {
     //call login api
     console.log(JSON.stringify(data));
-    //console.log("errors",errors);
+     const success = register(
+      {
+        user_name : data.Username,
+        email : data.Email,
+        password : data.Password
+      }
+    );
+
+    if (success) {
+			history.replace('/');
+		}
+
     reset();
+
   };
             
   return (
@@ -85,7 +90,7 @@ function FormSignup() {
               label="Email"
               type="email"
               placeholder="Enter your email"
-              validation={validationRules.email}
+
               data-cy="email_input_login"
             />
 

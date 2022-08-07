@@ -38,6 +38,11 @@ function parseExp(exp) {
 	return new Date(exp * 1000);
 }
 
+export const useRegister = () => {
+  const { register } = useAuth();
+  return register;
+};
+
 export const AuthProvider = ({
 	children,
 }) => {
@@ -90,11 +95,12 @@ export const AuthProvider = ({
   }, [setSession]);
 
   const register = useCallback(async (data) => {
+		console.log(data)
     try {
       setLoading(true);
       setError(null);
       const { token, user } = await usersApi.register(data);
-      await setSession(token, user);
+      //await setSession(token, user);
       return true;
     } catch (error) {
       setError(error);
@@ -102,7 +108,7 @@ export const AuthProvider = ({
     } finally {
       setLoading(false);
     }
-  }, [setSession]);
+  }, []);
 
   const logout = useCallback(() => {
     setSession(null, null);
@@ -121,7 +127,8 @@ export const AuthProvider = ({
 		loading,
 		login,
 		logout,
-	}), [token, user, error, loading, login, logout, ready]);
+		register
+	}), [token, user, error, loading, login, logout, ready, register]);
 
 	return (
 		<AuthContext.Provider value={value}>
