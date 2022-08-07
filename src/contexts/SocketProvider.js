@@ -45,12 +45,14 @@ export const SocketProvider = ({ children }) => {
     () => ({
       connectToRoom,
       sendMessage,
-      socket
+      socket,
+      isConnected
     }),
     [
       connectToRoom,
       sendMessage,
-      socket
+      socket,
+      isConnected
     ]
   );
 

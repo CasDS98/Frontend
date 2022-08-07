@@ -25,8 +25,8 @@ function App() {
   
   return (
     <div class="dark">
-     <SocketProvider>
-        <AuthProvider>
+      <AuthProvider>
+        <SocketProvider>
           <GroupsProvider>
             <MessagesProvider>
               <FriendsProvider>
@@ -54,8 +54,8 @@ function App() {
               </FriendsProvider>
             </MessagesProvider>
           </GroupsProvider>
-        </AuthProvider>
-      </SocketProvider>
+        </SocketProvider>
+      </AuthProvider>
     </div>
   );
 }

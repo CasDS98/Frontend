@@ -23,7 +23,7 @@ export const MessagesProvider = ({ children }) => {
   const [currentMessage, setCurrentMessage] = useState({});
   const [selectedGroupId, setSelectedGroupId] = useState();
   const { ready: authReady } = useSession();
-  const {sendMessage, socket} = useSocket();
+  const {sendMessage, socket, isConnected} = useSocket();
 
   const refreshMessages = useCallback(async () => {
     try {
@@ -50,11 +50,12 @@ export const MessagesProvider = ({ children }) => {
   const setCurrentGroup = useCallback(async(groupId) => 
   {
     setSelectedGroupId(groupId);
-  },[]);
+    refreshMessages();
+  },[refreshMessages]);
 
-  useEffect(() => {
-     refreshMessages();
-}, [selectedGroupId,refreshMessages]);
+ // useEffect(() => {
+   //  refreshMessages();
+//}, [selectedGroupId,refreshMessages]);
 
   const createMessage = useCallback(
     async ({ user_id, group_id, message}) => {
@@ -80,10 +81,13 @@ export const MessagesProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    socket.on("receive_message", (data) => {
-      console.log("receiving message");
-      setMessages([...messages,data])
-    })
+    if(isConnected)
+    {
+      socket.on("receive_message", (data) => {
+        console.log("receiving message");
+        setMessages([...messages,data])
+      })
+    }
   })
 
 

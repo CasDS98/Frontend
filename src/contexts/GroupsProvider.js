@@ -25,10 +25,12 @@ export const GroupsProvider = ({ children }) => {
 
 
     const refreshGroups = useCallback(async () => {
+      console.log("Refresh groups");
+      console.log(user);
       try {
         setError();
         setLoading(true);
-        console.log("Refresh groups");
+        
         const groups = await groupsApi.getAllGroups(user.id);
         setGroups(groups);
       } catch (error) {
@@ -41,13 +43,6 @@ export const GroupsProvider = ({ children }) => {
     useEffect(() => {
       setInitialLoad(false);
     }, [user]);
-  
-    useEffect(() => {
-      if (authReady && !initialLoad) {
-        refreshGroups();
-        setInitialLoad(true);
-      }
-    }, [initialLoad, refreshGroups, authReady]);
 
     const refreshMembers = useCallback(async () => {
       try {
@@ -61,10 +56,20 @@ export const GroupsProvider = ({ children }) => {
         setLoading(false);
       }
     }, [currentGroup.id]);
-
+  
     useEffect(() => {
-      refreshMembers();
- }, [currentGroup,refreshMembers]);
+      if (authReady && !initialLoad) {
+        refreshGroups();
+        refreshMembers();
+        setInitialLoad(true);
+      }
+    }, [initialLoad, refreshGroups, authReady,refreshMembers]);
+
+    //useEffect(() => {
+      //if (authReady ) {
+      //  refreshMembers();
+     // }
+    // }, [currentGroup,refreshMembers,authReady]);
   
     const setGroupToUpdate = useCallback(
       (id) => {

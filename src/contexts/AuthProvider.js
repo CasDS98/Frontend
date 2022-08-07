@@ -47,56 +47,71 @@ export const AuthProvider = ({
 	const [user, setUser] = useState(null);
   const [ready, setReady] = useState(false);
 
-	useEffect(() => {
-    setReady(Boolean(token));
+	const setSession = useCallback(async (token, user) => {
+    const { exp, userId } = parseJwt(token);
+    const expiry = parseExp(exp);
+    const stillValid = expiry >= new Date();
+
+    if (stillValid) {
+      localStorage.setItem(JWT_TOKEN_KEY, token);
+    } else {
+      localStorage.removeItem(JWT_TOKEN_KEY);
+      token = null;
+    }
+
     api.setAuthToken(token);
+    setToken(token);
+    setReady(token && stillValid);
 
-		if (token) {
-			localStorage.setItem(JWT_TOKEN_KEY, token);
-		} else {
-			localStorage.removeItem(JWT_TOKEN_KEY)
-		}
-	}, [token]);
+    if (!user && stillValid) {
+      user = await usersApi.getUser(userId);
+    }
+    setUser(user);
+  }, []);
 
-  const setSession = useCallback((token) => {
-		const { exp } = parseJwt(token);
-		const expiry = parseExp(exp);
-		const stillValid = expiry >= new Date();
+  useEffect(() => {
+    setSession(token);
+  }, [token, setSession]);
 
-		console.log("test")
-		if (stillValid) {
-			localStorage.setItem(JWT_TOKEN_KEY, token);
-		} else {
-			localStorage.removeItem(JWT_TOKEN_KEY);
-			token = null;
-		}
+  const login = useCallback(async (email, password) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const { token, user } = await usersApi.login(email, password);
+      await setSession(token, user);
+      return true;
+    } catch (error) {
+      console.error(error);
+      setError('Login failed, try again');
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  }, [setSession]);
 
-		api.setAuthToken(token);
-		setToken(token);
-		setReady(stillValid);
-	}, []);
+  const register = useCallback(async (data) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const { token, user } = await usersApi.register(data);
+      await setSession(token, user);
+      return true;
+    } catch (error) {
+      setError(error);
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  }, [setSession]);
 
-	const login = useCallback(async (email, password) => {
-		try {
-			setLoading(false);
-			setError('');
-			const { token, user } = await usersApi.login(email, password);
-			setSession (token);
-			setUser(user);
-			return true;
-		} catch (error) {
-			console.error(error);
-			setError('Login failed, try again');
-			return false;
-		} finally {
-			setLoading(false);
-		}
-	}, [setSession ]);
+  const logout = useCallback(() => {
+    setSession(null, null);
+  }, [setSession]);
 
-	const logout = useCallback(() => {
-		setSession (null);
-		setUser(null);
-	}, [setSession ]);
+  const hasRole = useCallback((role) => {
+    if (!user) return false;
+    return user.roles.includes(role);
+  }, [user]);
 
 	const value = useMemo(() => ({
 		token,

@@ -1,7 +1,7 @@
 import { axios } from '.';
 
 export const getAllMessages = async (group_id) => {
- 
+  
     const { data } = await axios.get(
       `messages/${group_id}`
     );
