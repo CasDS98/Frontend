@@ -12,6 +12,7 @@ const AddMemberList = () => {
   });
 
    const allMembers = useMemo(() => {
+      if(!members || !members.length) return [];
       //filter for members that are not part of the group
       let nonGroupMembers = [];
       console.log(friends);

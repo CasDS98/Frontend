@@ -10,6 +10,7 @@ import {
 
 import * as messagesApi from '../api/messages';
 import { useSession } from './AuthProvider';
+import { useSocket } from "../contexts/SocketProvider";
 
 export const MessagesContext = createContext();
 export const useMessages = () => useContext(MessagesContext);
@@ -22,6 +23,7 @@ export const MessagesProvider = ({ children }) => {
   const [currentMessage, setCurrentMessage] = useState({});
   const [selectedGroupId, setSelectedGroupId] = useState();
   const { ready: authReady } = useSession();
+  const {sendMessage, socket} = useSocket();
 
   const refreshMessages = useCallback(async () => {
     try {
@@ -59,10 +61,13 @@ export const MessagesProvider = ({ children }) => {
       setError();
       setLoading(true);
       try {
-        const { changedMessage } = await messagesApi.saveMessage({ user_id,
+        const changedMessage  = await messagesApi.saveMessage({ user_id,
           group_id,
           message,});
-        await refreshMessages();
+        //await refreshMessages();
+        setMessages([...messages,changedMessage])
+        //send message to socket
+        sendMessage(changedMessage);
         return changedMessage;
       } catch (error) {
         console.log(error);
@@ -71,8 +76,15 @@ export const MessagesProvider = ({ children }) => {
         setLoading(false);
       }
     },
-    [refreshMessages]
+    [sendMessage, messages]
   );
+
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      console.log("receiving message");
+      setMessages([...messages,data])
+    })
+  })
 
 
   const value = useMemo(
