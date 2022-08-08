@@ -55,30 +55,29 @@ export const GroupsProvider = ({ children }) => {
       } finally {
         setLoading(false);
       }
-    }, [currentGroup.id]);
+    }, [currentGroup]);
   
     useEffect(() => {
       if (authReady && !initialLoad) {
         refreshGroups();
-        refreshMembers();
         setInitialLoad(true);
       }
     }, [initialLoad, refreshGroups, authReady,refreshMembers]);
 
-    //useEffect(() => {
-      //if (authReady ) {
-      //  refreshMembers();
-     // }
-    // }, [currentGroup,refreshMembers,authReady]);
+    useEffect(() => {
+      if (authReady ) {
+        refreshMembers();
+      }
+     }, [currentGroup,refreshMembers,authReady]);
   
     const setGroupToUpdate = useCallback(
-      (id) => {
+       (id) => {
         setCurrentGroup(
           id === null ? {} : groups.find((t) => t.id === id)
         );
-        refreshMembers();
+        //await refreshMembers();
       },
-      [groups,refreshMembers]
+      [groups]
     );
 
     const createGroup = useCallback(

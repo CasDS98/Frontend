@@ -67,7 +67,7 @@ export const FriendsProvider = ({ children }) => {
     );
 
     const deleteFriends = useCallback(
-      async ({user_a, user_b}) => {
+      async (user_a, user_b) => {
         setError();
         setLoading(true);
         try {
