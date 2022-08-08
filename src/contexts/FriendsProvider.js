@@ -49,11 +49,11 @@ export const FriendsProvider = ({ children }) => {
     }, [initialLoad, refreshFriends, authReady]);
 
     const createFriends = useCallback(
-      async ({user_a, user_b}) => {
+      async (user_a, user_b) => {
         setError();
         setLoading(true);
         try {
-          const friend = friendsApi.saveFriends({user_a,user_b})
+          const friend = await friendsApi.saveFriends({user_a,user_b})
           refreshFriends();
           return friend;
         } catch (error) {

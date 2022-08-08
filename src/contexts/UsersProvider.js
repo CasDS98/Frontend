@@ -16,7 +16,25 @@ export const UsersProvider = ({ children }) => {
   const [initialLoad, setInitialLoad] = useState(false);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
+  const [searchedUsers, setSearchedUsers] = useState([]);
 
+
+  const getUsersBySearch = useCallback(
+    async (value) => {
+      setError();
+      setLoading(true);
+      try {
+        const users = await userApi.getUsersBySearch(value);
+        setSearchedUsers(users);
+      } catch (error) {
+        console.log(error);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    },[]
+  );
+    
 
   const getUser = useCallback(
     async (id) => {
@@ -39,12 +57,16 @@ export const UsersProvider = ({ children }) => {
       () => ({
       error,
       loading,
-      getUser
+      getUser,
+      getUsersBySearch,
+      searchedUsers
     }),
     [
       error,
       loading,
-      getUser
+      getUser,
+      getUsersBySearch,
+      searchedUsers
     ]
   );
 

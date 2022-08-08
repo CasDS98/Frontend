@@ -34,5 +34,11 @@ id
 	return data;
 };
 
-
+export const getUsersBySearch = async (
+  value) => {
+		if(value === "" || value === null) return [];
+		const { data } =  await axios.get(`users/search/${value}`);
+		console.log(data);
+		return data;
+	};
 
