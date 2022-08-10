@@ -19,7 +19,7 @@ export const GroupsProvider = ({ children }) => {
   const [groups, setGroups] = useState([]);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
-  const [currentGroup, setCurrentGroup] = useState({});
+  const [currentGroup, setCurrentGroup] = useState(null);
   const { ready: authReady, user } = useSession();
   const [members, setMembers] = useState({});
 

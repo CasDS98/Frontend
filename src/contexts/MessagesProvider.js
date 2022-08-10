@@ -28,6 +28,9 @@ export const MessagesProvider = ({ children }) => {
   const {currentGroup} = useGroups();
 
   const refreshMessages = useCallback(async () => {
+   
+    if(currentGroup === null) return [];
+    
     try {
       console.log(`Refresh messages ${currentGroup.id}`);
       setError();
@@ -39,7 +42,7 @@ export const MessagesProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  }, [currentGroup.id]);
+  }, [currentGroup]);
 
   useEffect(() => {
     if (authReady && !initialLoad) {

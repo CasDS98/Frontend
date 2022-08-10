@@ -2,12 +2,14 @@ import { useFormContext } from "react-hook-form";
 
 const LabelInput = ({ label,placeholder, type, defaultValue, validation,onChange, ...rest }) => {
   const { register, formState: { errors } } = useFormContext();
+  
+
   return (
     <div className="form-inputs">
       <input
         {...register(label, validation)}
         defaultValue={defaultValue}
-        placeholder={placeholder}
+        placeholder={(errors[label] ?  errors[label].message : placeholder)}
         type={type}
         id={label}
         name={label}
@@ -15,11 +17,6 @@ const LabelInput = ({ label,placeholder, type, defaultValue, validation,onChange
         onChange={onChange}
         {...rest}
       />
-      {errors[label] && (
-        <p data-cy="labelinput-error">
-          {errors[label].message}
-        </p>
-      )}
     </div>
   );
 };

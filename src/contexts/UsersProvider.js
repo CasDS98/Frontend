@@ -18,7 +18,7 @@ export const UsersProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [searchedUsers, setSearchedUsers] = useState([]);
 
-
+  
   const getUsersBySearch = useCallback(
     async (value) => {
       setError();

@@ -26,6 +26,7 @@ function App() {
   
   return (
     <div class="dark">
+       <div class="h-screen dark:bg-gray-800">
       <AuthProvider>
         <SocketProvider>
           <GroupsProvider>
@@ -60,6 +61,7 @@ function App() {
           </GroupsProvider>
         </SocketProvider>
       </AuthProvider>
+      </div>
     </div>
   );
 }

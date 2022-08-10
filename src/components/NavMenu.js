@@ -9,8 +9,8 @@ const NavItem = ({
   <span>
     <NavLink
       to={to}
-      className="hover:text-blue-500"
-      activeClassName="text-blue-500 cursor-default"
+      className="text-2xl text-white rounded-t-lg p-4 hover:bg-gray-800"
+      activeClassName="bg-gray-800 text-blue-400 rounded-t-lg cursor-default"
     >
       {label}
     </NavLink>
@@ -26,30 +26,32 @@ export default function NavMenu() {
   }, [logout]);
 
   return (
+    <div class="dark:bg-gray-800">
+    {
+      isAuthed ? (
+        <>
 
-    <div className="mb-6">
-    <nav className="flex space-x-6">
-      {
-        isAuthed ? (
-          <>
-            <NavItem to="/messages" label="Messages" />
-            <NavItem to="/friends" label="Friends" />
-          </>
-        ) : null
+          <div className="mb-6 ">
+            <nav class="font-sans flex flex-col text-center sm:flex-row sm:text-left py-3 px-6 dark:bg-gray-900 shadow sm:items-baseline w-full">
+              <div class="mb-2 sm:mb-0">
+                <NavItem to="/messages" label="Messages" />
+              </div>
+              <div class="mb-2 sm:mb-0">
+                  <NavItem to="/friends" label="Friends" />
+              </div>
+              <div class="ml-auto text-white hover:bg-gray-800">
+                <button onClick={handleLogout}>
+                    Sign out
+                  </button>
+              </div>
+            </nav>
+        </div>
+        </>
+        ) :   
+        <>
+          <div class="   py-3 px-6 dark:bg-gray-800"/>
+        </>
       }
-      <div className="flex-1"></div>
-      {
-        !isAuthed ? (
-        null
-        ) : (
-          <>
-            <button onClick={handleLogout}>
-              Sign out
-            </button>
-          </>
-        )
-      }
-    </nav>
-  </div>
+      </div>
 );
 }

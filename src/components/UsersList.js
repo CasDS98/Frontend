@@ -37,7 +37,7 @@ const UsersList = () => {
 
 
   
-    if (loading) return <h1 data-cy="loading">Loading...</h1>;
+    if (loading) return <h1 class="text-white" data-cy="loading">Loading...</h1>;
     if (error)
       return (
         <p data-cy="groups_error" className="error">
@@ -46,8 +46,8 @@ const UsersList = () => {
       );
     if (!searchedUsers || !searchedUsers.length) {
       return (
-        <p className="info flex flex-row items-center">
-          <span className="flex-1">There are no members</span>
+        <p className="text-white info flex flex-row items-center">
+          <span className="flex-1">Use the search bar to find users</span>
         </p>
       );
     }
@@ -57,11 +57,11 @@ const UsersList = () => {
       {allSearchedUsers.map((user) => {return (
          
          <div  class="grid p-6 ">
-           <div  class=" p-2 border rounded-lg dark:border-gray-700">
+           <div  class=" border rounded-lg dark:border-gray-700">
              <div class="grid grid-cols-4">
-               <div class="grid col-span-3"><User key={user.id} {...user}></User> </div>
-                <button onClick={() => {addFriend(user.id)}} class="block  w-full bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-900  dark:hover:bg-gray-700">
-                  <img src="/img/trash.svg" alt="delete" ></img>
+               <div class="grid  p-2 col-span-3"><User key={user.id} {...user}></User> </div>
+                <button onClick={() => {addFriend(user.id)}} class="block p-5 w-full bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
+                  <img src="/img/add-user-svgrepo-com.svg" alt="delete" ></img>
                 </button>
              </div>
            </div>

@@ -23,7 +23,7 @@ const MemberList = () => {
     if (!members || !members.length) {
       return (
         <p className="info flex flex-row items-center">
-          <span className="flex-1">There are no members</span>
+          <span className="flex-1">Please select a group</span>
         </p>
       );
     }
@@ -31,15 +31,14 @@ const MemberList = () => {
    return (
       <>
       {allMembers.map((member) => {return (
-         
-         <div  class="grid grid-cols-5">
-           <div  class="col-span-4">
-             <User key={member.id} {...member}></User>
-           </div>
-           <button onClick={() => {removeMember(member.id)}} class="block p-6 w-full bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800  dark:hover:bg-gray-700">
-              <img src="/img/trash.svg" alt="delete" ></img>
-           </button>
-        </div>
+         <div  class="grid grid-cols-5  border rounded-lg dark:border-gray-700">
+            <div  class="col-span-4 p-2">
+              <User key={member.id} {...member}></User>
+            </div>
+            <button onClick={() => {removeMember(member.id)}} class="block p-4 bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
+              <img src="/img/remove-user-svgrepo-com.svg" alt="delete" ></img>
+            </button>
+         </div>
       )})}
       </>
 

@@ -25,9 +25,9 @@ const GroupList = () => {
     }
 
    return (
-      <>
+      <div class="p-2">
       {allGroups.map((group) => {return <Group key={group.id} {...group}></Group>})}
-      </>
+      </div>
 
    );
 };

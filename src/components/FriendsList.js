@@ -15,7 +15,7 @@ const FriendsList = () => {
       return friends;
     }, [friends]);
   
-    if (loading) return <h1 data-cy="loading">Loading...</h1>;
+    if (loading) return <h1 class="text-white" data-cy="loading">Loading...</h1>;
     if (error)
       return (
         <p data-cy="friends_list__error" className="error">
@@ -24,7 +24,7 @@ const FriendsList = () => {
       );
     if (!friends || !friends.length) {
       return (
-        <p className="info flex flex-row items-center">
+        <p className="info flex flex-row items-center text-white">
           <span className="flex-1">You have no friends </span>
         </p>
       );
@@ -34,12 +34,12 @@ const FriendsList = () => {
       <>
       {allFriends.map((friend) => {return (
          
-         <div  class="grid grid-cols-5">
-           <div  class="col-span-4">
+         <div  class="grid grid-cols-5  border rounded-lg dark:border-gray-700">
+           <div  class="col-span-4 p-2">
              <User key={friend.id} {...friend}></User>
            </div>
-           <button onClick={() => {removeFriend(friend.id)}} class="block p-6 w-full bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800  dark:hover:bg-gray-700">
-              <img src="/img/trash.svg" alt="delete" ></img>
+           <button onClick={() => {removeFriend(friend.id)}} class="block p-4 bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
+              <img src="/img/remove-user-svgrepo-com.svg" alt="delete" ></img>
            </button>
         </div>
       )})}
