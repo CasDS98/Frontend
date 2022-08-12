@@ -5,8 +5,8 @@ module.exports = {
     extend: {
 
       gridTemplateRows: {
-        // Simple 16 column grid
         'message': '100px 1fr 75px',
+        'members': '1fr 100px 1fr',
       },
 
       height: theme => ({

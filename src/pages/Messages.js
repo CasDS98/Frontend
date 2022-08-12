@@ -26,14 +26,14 @@ export default function messages() {
 
         
         
-       <div class="grid row-span-2 grid-rows-2 p-6 border-t-2 border-b-2 dark:text-white dark:border-gray-700">
-          <div>
+       <div class="grid row-span-2 grid-rows-3 grid-rows-members p-6 border-t-2 border-b-2 dark:text-white dark:border-gray-700">
+          <div class="scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-600 overflow-y-scroll">
               <MemberList></MemberList>
           </div>
-        <div>
           <h1 class="text-left p-6 mb-2 text-4xl border-t-2 border-b-2 font-bold tracking-tight text-gray-900 dark:text-white dark:border-gray-700">Add Members</h1>
-            <AddMemberList></AddMemberList>
-        </div>
+          <div class="scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-600 overflow-y-scroll">
+             <AddMemberList></AddMemberList>
+          </div>
         </div>
         <div class="dark:text-white border-r-2 dark:border-gray-700">
           <CreateGroupForm></CreateGroupForm>

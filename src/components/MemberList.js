@@ -31,7 +31,7 @@ const MemberList = () => {
    return (
       <>
       {allMembers.map((member) => {return (
-         <div  class="grid grid-cols-5  border rounded-lg dark:border-gray-700">
+         <div  class="grid grid-cols-5  border rounded-lg dark:border-gray-700 ">
             <div  class="col-span-4 p-2">
               <User key={member.id} {...member}></User>
             </div>

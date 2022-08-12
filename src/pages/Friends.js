@@ -15,7 +15,7 @@ export default function friends() {
           <FriendsList></FriendsList>
         </div>
 
-        <div class="text-left col-span-4 p-6 border-b-2 border-r-2 dark:border-gray-700">
+        <div class="text-left col-span-4 p-6 border-b-2 border-r-2 dark:border-gray-700 scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-600 overflow-y-scroll">
           <UsersList></UsersList>
         </div>
 
