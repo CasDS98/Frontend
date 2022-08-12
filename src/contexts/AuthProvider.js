@@ -9,8 +9,8 @@ const AuthContext = createContext();
 const useAuth = () => useContext(AuthContext);
 
 export const useSession = () => {
-	const { loading, token, user, ready, error } = useAuth();
-	return { loading, token, user, ready, error, isAuthed: Boolean(token)};
+	const { loading, token, user, ready, error, hasRole } = useAuth();
+	return { loading, token, user, ready, error, isAuthed: Boolean(token), hasRole};
 };
 
 export const useLogin = () => {
@@ -127,8 +127,9 @@ export const AuthProvider = ({
 		loading,
 		login,
 		logout,
-		register
-	}), [token, user, error, loading, login, logout, ready, register]);
+		register,
+    hasRole
+	}), [token, user, error, loading, login, logout, ready, register,hasRole]);
 
 	return (
 		<AuthContext.Provider value={value}>

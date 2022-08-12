@@ -5,15 +5,19 @@ import { useSession } from '../contexts/AuthProvider';
 import User from "./User"
 
 const UsersList = () => {
-   const {  error, loading, searchedUsers} = useUsers();
+   const {  error, loading, searchedUsers, deleteUser} = useUsers();
    const {createFriends, friends} = useFriends();
-   const { user } = useSession();
+   const { user, hasRole } = useSession();
    
     
    
    
    const addFriend = (( friend_id) => {
     createFriends(user.id, friend_id);
+    });
+
+   const deleteUserFromApp = (( user_id) => {
+       deleteUser(user_id);
     });
 
     const allSearchedUsers = useMemo(() => {
@@ -58,11 +62,23 @@ const UsersList = () => {
          
          <div  class="grid p-6 ">
            <div  class=" border rounded-lg dark:border-gray-700">
-             <div class="grid grid-cols-4">
-               <div class="grid  p-2 col-span-3"><User key={user.id} {...user}></User> </div>
+             <div class="grid grid-cols-5 ">
+                {hasRole("admin") ? (
+                    <div class="grid  p-2 col-span-3"><User key={user.id} {...user}></User> </div>
+                  ) :   
+                    <div class="grid  p-2 col-span-4"><User key={user.id} {...user}></User> </div>
+                  }
                 <button onClick={() => {addFriend(user.id)}} class="block p-5 w-full bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
                   <img src="/img/add-user-svgrepo-com.svg" alt="delete" ></img>
                 </button>
+                {hasRole("admin") ? (
+                  <>
+                    <button onClick={() => {deleteUserFromApp(user.id)}} class="block p-5 w-full bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
+                        <img src="/img/delete-svgrepo-com.svg" alt="delete" ></img>
+                    </button>
+                  </>
+                  ) :   
+                  <></>}
              </div>
            </div>
         </div>

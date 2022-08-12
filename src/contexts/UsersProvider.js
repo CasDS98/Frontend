@@ -51,6 +51,23 @@ export const UsersProvider = ({ children }) => {
       }
     },[]
   );
+
+  const deleteUser = useCallback(
+    async (user_id) => {
+      setError();
+      setLoading(true);
+      try {
+        await userApi.deleteUser(user_id);
+        setSearchedUsers(searchedUsers.filter(data => data.id !== user_id));
+      } catch (error) {
+        console.log(error);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [searchedUsers]
+  );
     
 
     const value = useMemo(
@@ -59,14 +76,16 @@ export const UsersProvider = ({ children }) => {
       loading,
       getUser,
       getUsersBySearch,
-      searchedUsers
+      searchedUsers,
+      deleteUser
     }),
     [
       error,
       loading,
       getUser,
       getUsersBySearch,
-      searchedUsers
+      searchedUsers,
+      deleteUser
     ]
   );
 
