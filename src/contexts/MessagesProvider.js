@@ -22,7 +22,6 @@ export const MessagesProvider = ({ children }) => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [currentMessage, setCurrentMessage] = useState({});
-  const [selectedGroupId, setSelectedGroupId] = useState();
   const { ready: authReady } = useSession();
   const {sendMessage, socket, isConnected} = useSocket();
   const {currentGroup} = useGroups();
@@ -51,15 +50,6 @@ export const MessagesProvider = ({ children }) => {
     }
   }, [initialLoad, refreshMessages, authReady]);
 
-  
-  const setCurrentGroup = useCallback(async(groupId) => 
-  {
-    console.log("current groupid")
-    console.log(groupId)
-    setSelectedGroupId(groupId);
-   
-  },[]);
-
   useEffect(() => {
     if(authReady)
     {
@@ -68,12 +58,12 @@ export const MessagesProvider = ({ children }) => {
    }, [currentGroup,refreshMessages,authReady]);
 
   const createMessage = useCallback(
-    async ({ user_id, group_id, message}) => {
+    async ({ user_id, message}) => {
       setError();
       setLoading(true);
       try {
         const changedMessage  = await messagesApi.saveMessage({ user_id,
-          group_id,
+          group_id : currentGroup.id,
           message,});
         //await refreshMessages();
         setMessages([...messages,changedMessage])
@@ -107,22 +97,14 @@ export const MessagesProvider = ({ children }) => {
     error,
     loading,
     currentMessage,
-    setCurrentGroup,
     createMessage,
-    selectedGroupId
-   // deleteGroup,
-    //setGroupToUpdate,
   }),
   [
     messages,
     error,
     loading,
     currentMessage,
-    setCurrentGroup,
     createMessage,
-    selectedGroupId
-   // deleteGroup,
-    //setGroupToUpdate,
   ]
 );
 

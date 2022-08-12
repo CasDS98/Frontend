@@ -8,6 +8,7 @@ import {
 } from "react";
 
 import * as userApi from '../api/users';
+import { useSocket } from "../contexts/SocketProvider";
 
 export const UsersContext = createContext();
 export const useUsers = () => useContext(UsersContext);
@@ -17,8 +18,19 @@ export const UsersProvider = ({ children }) => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [searchedUsers, setSearchedUsers] = useState([]);
+  const {socket, isConnected,sendDeleteUser} = useSocket();
 
   
+  useEffect(() => {
+    if(isConnected)
+    {
+      socket.on("receive_delete_user", (data) => {
+        console.log("receive_delete_user");
+        setSearchedUsers(searchedUsers.filter(user => user.id !== data.user));
+      })
+    }
+  })
+
   const getUsersBySearch = useCallback(
     async (value) => {
       setError();
@@ -59,6 +71,7 @@ export const UsersProvider = ({ children }) => {
       try {
         await userApi.deleteUser(user_id);
         setSearchedUsers(searchedUsers.filter(data => data.id !== user_id));
+        sendDeleteUser(user_id);
       } catch (error) {
         console.log(error);
         throw error;
@@ -66,7 +79,7 @@ export const UsersProvider = ({ children }) => {
         setLoading(false);
       }
     },
-    [searchedUsers]
+    [searchedUsers,sendDeleteUser]
   );
     
 

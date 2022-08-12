@@ -9,6 +9,7 @@ import {
 
 import * as friendsApi from '../api/friends';
 import { useSession } from './AuthProvider';
+import { useSocket } from "../contexts/SocketProvider";
 
 export const FriendsContext = createContext();
 export const useFriends = () => useContext(FriendsContext);
@@ -19,7 +20,17 @@ export const FriendsProvider = ({ children }) => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const { ready: authReady, user } = useSession();
+  const {socket, isConnected} = useSocket();
 
+  useEffect(() => {
+    if(isConnected)
+    {
+      socket.on("receive_delete_user", (data) => {
+        console.log("receive_delete_user_FriendsProvider");
+        setFriends(friends.filter(user => user.id !== data.user));
+      })
+    }
+  })
 
     const refreshFriends = useCallback(async () => {
       try {

@@ -18,7 +18,7 @@ const GroupList = () => {
       );
     if (!groups || !groups.length) {
       return (
-        <p className="info flex flex-row items-center">
+        <p className="text-white info flex flex-row items-center">
           <span className="flex-1">There are no groups</span>
         </p>
       );

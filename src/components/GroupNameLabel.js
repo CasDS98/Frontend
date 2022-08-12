@@ -12,6 +12,9 @@ const GroupNameLabel = (()  => {
     return currentGroup ? ` : ${currentGroup.name}` : "";
 	});
 
+  useEffect(()=>{
+
+  },[currentGroup])
 
   return(
 

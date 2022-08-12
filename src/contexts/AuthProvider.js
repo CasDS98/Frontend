@@ -2,11 +2,13 @@ import { useMemo, createContext, useState, useCallback, useEffect, useContext } 
 import * as usersApi from '../api/users'; 
 import config from '../config.json';
 import * as api from '../api';
+import { useSocket } from "../contexts/SocketProvider";
 
 const JWT_TOKEN_KEY = config.token_key;
 const AuthContext = createContext();
 
 const useAuth = () => useContext(AuthContext);
+
 
 export const useSession = () => {
 	const { loading, token, user, ready, error, hasRole } = useAuth();
@@ -51,6 +53,17 @@ export const AuthProvider = ({
 	const [token, setToken] = useState(localStorage.getItem(JWT_TOKEN_KEY));
 	const [user, setUser] = useState(null);
   const [ready, setReady] = useState(false);
+  const {socket, isConnected} = useSocket();
+
+  useEffect(() => {
+    if(isConnected)
+    {
+      socket.on("receive_delete_user", (data) => {
+        console.log("receive_delete_user_AuthProvider");
+        if(parseJwt(token).user === data.user)logout();
+      })
+    }
+  })
 
 	const setSession = useCallback(async (token, user) => {
     const { exp, userId } = parseJwt(token);

@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useCallback } from "react";
+import React, { useContext, useMemo, useCallback,useEffect } from "react";
 import { useUsers } from "../contexts/UsersProvider";
 import { useFriends } from "../contexts/FriendsProvider";
 import { useSession } from '../contexts/AuthProvider';
@@ -8,10 +8,7 @@ const UsersList = () => {
    const {  error, loading, searchedUsers, deleteUser} = useUsers();
    const {createFriends, friends} = useFriends();
    const { user, hasRole } = useSession();
-   
-    
-   
-   
+
    const addFriend = (( friend_id) => {
     createFriends(user.id, friend_id);
     });
@@ -34,7 +31,7 @@ const UsersList = () => {
             nonFriendUsers.push(element);
           }
        }
-      });
+      },[searchedUsers]);
 
       return nonFriendUsers;
     }, [friends, searchedUsers, user]);

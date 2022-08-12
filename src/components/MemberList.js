@@ -20,7 +20,7 @@ const MemberList = () => {
           {JSON.stringify(error, null, 2)}
         </p>
       );
-    if (!members || !members.length) {
+    if (!members || !members.lenght) {
       return (
         <p className="info flex flex-row items-center">
           <span className="flex-1">Please select a group</span>

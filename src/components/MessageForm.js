@@ -21,8 +21,7 @@ const MessageForm = ()  => {
   } = methods;
 
   const {
-    createMessage,
-    selectedGroupId
+    createMessage
   } = useMessages();
   
 
@@ -32,7 +31,6 @@ const MessageForm = ()  => {
         console.log(data);
         await createMessage({
           user_id: user.id,
-          group_id: selectedGroupId,
           message: data.message,
         });
         reset();
@@ -43,10 +41,8 @@ const MessageForm = ()  => {
     },
     [
       createMessage,
-      selectedGroupId,
       reset,
       user
-     // message
     ]
   );
 

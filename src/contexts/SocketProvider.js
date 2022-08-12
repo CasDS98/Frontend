@@ -40,19 +40,58 @@ export const SocketProvider = ({ children }) => {
     }
     socket.emit('send_message', messageContent)
   },[socket,room])
+
+  const sendDeleteUser = useCallback(  async(user) => {
+    let messageContent = {
+      room : room,
+      user : user
+    }
+    socket.emit('delete_user', messageContent)
+  },[socket,room])
+
+  const removeMember = useCallback(  async(member) => {
+    let messageContent = {
+      room : room,
+      member : member
+    }
+    socket.emit('remove_member', messageContent)
+  },[socket,room])
+
+  const sendAddMember = useCallback(  async() => {
+    let messageContent = {
+      room : room,
+    }
+    socket.emit('add_member', messageContent)
+  },[socket,room])
+
+  const sendDeleteGroup = useCallback(  async() => {
+    let messageContent = {
+      room : room,
+    }
+    socket.emit('delete_group', messageContent)
+  },[socket,room])
+ 
  
   const value = useMemo(
     () => ({
       connectToRoom,
       sendMessage,
       socket,
-      isConnected
+      isConnected,
+      sendDeleteUser,
+      removeMember,
+      sendAddMember,
+      sendDeleteGroup
     }),
     [
       connectToRoom,
       sendMessage,
       socket,
-      isConnected
+      isConnected,
+      sendDeleteUser,
+      removeMember,
+      sendAddMember,
+      sendDeleteGroup
     ]
   );
 

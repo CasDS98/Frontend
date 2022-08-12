@@ -27,40 +27,40 @@ function App() {
   return (
     <div class="dark">
        <div class="h-screen dark:bg-gray-800">
-      <AuthProvider>
-        <SocketProvider>
-          <GroupsProvider>
-            <MessagesProvider>
-              <FriendsProvider>
-                <UsersProvider>
-                  <Router>
-                    <NavMenu/>
-                    <Switch>
-                      <div className="App">
-                      <Route path="/" exact>
-                        <Redirect to="/messages" />
-                      </Route>
-                      <Route exact path="/register">
-                        <Form></Form>
-                      </Route>
-                      <Route exact path="/login">
-                        <FormLogin></FormLogin>
-                      </Route>
-                      <PrivateRoute  exact path="/messages">
-                        <Messages></Messages>
-                      </PrivateRoute >
-                      <PrivateRoute  exact path="/friends">
-                        <Friends></Friends>
-                      </PrivateRoute >
-                      </div>
-                    </Switch>
-                  </Router>
-                </UsersProvider>
-              </FriendsProvider>
-            </MessagesProvider>
-          </GroupsProvider>
-        </SocketProvider>
-      </AuthProvider>
+      <SocketProvider>
+       <AuthProvider>
+         <UsersProvider>
+            <GroupsProvider>
+              <MessagesProvider>
+                <FriendsProvider>
+                    <Router>
+                      <NavMenu/>
+                      <Switch>
+                        <div className="App">
+                        <Route path="/" exact>
+                          <Redirect to="/messages" />
+                        </Route>
+                        <Route exact path="/register">
+                          <Form></Form>
+                        </Route>
+                        <Route exact path="/login">
+                          <FormLogin></FormLogin>
+                        </Route>
+                        <PrivateRoute  exact path="/messages">
+                          <Messages></Messages>
+                        </PrivateRoute >
+                        <PrivateRoute  exact path="/friends">
+                          <Friends></Friends>
+                        </PrivateRoute >
+                        </div>
+                      </Switch>
+                    </Router>
+                </FriendsProvider>
+              </MessagesProvider>
+            </GroupsProvider>
+          </UsersProvider>
+         </AuthProvider>
+      </SocketProvider>
       </div>
     </div>
   );

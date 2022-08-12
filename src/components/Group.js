@@ -1,20 +1,17 @@
 import { useEffect, memo, useCallback, useContext } from "react";
-import { useMessages } from "../contexts/MessagesProvider";
 import { useGroups } from "../contexts/GroupsProvider";
 import { useSocket } from "../contexts/SocketProvider";
 
 const Group = memo(({ id, name})  => {
-  const {setCurrentGroup} = useMessages();
   const {setGroupToUpdate, deleteGroup} = useGroups();
   const {connectToRoom} = useSocket();
 
   //function to set groupId in messages
   const selectGroup = useCallback(() => {
     console.log(`Group selected : ${id}`);
-    setCurrentGroup(id);
     setGroupToUpdate(id);
     connectToRoom(id);
-	}, [id, setCurrentGroup, setGroupToUpdate,connectToRoom]);
+	}, [id, setGroupToUpdate,connectToRoom]);
 
   const remove = useCallback(() => {
     deleteGroup(id);
