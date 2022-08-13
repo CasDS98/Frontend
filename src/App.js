@@ -15,7 +15,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route,
   Redirect
@@ -33,23 +33,23 @@ function App() {
             <GroupsProvider>
               <MessagesProvider>
                 <FriendsProvider>
-                    <Router>
+                    <Router basename="/frontendweb-karine-2122-CasDS98">
                       <NavMenu/>
                       <Switch>
                         <div className="App">
-                        <Route path="/frontendweb-karine-2122-CasDS98" exact>
-                          <Redirect to="/frontendweb-karine-2122-CasDS98/messages" />
+                        <Route path="/" exact>
+                          <Redirect to="/messages" />
                         </Route>
-                        <Route exact path="/frontendweb-karine-2122-CasDS98/register">
+                        <Route exact path="/register">
                           <Form></Form>
                         </Route>
-                        <Route exact path="/frontendweb-karine-2122-CasDS98/login">
+                        <Route exact path="/login">
                           <FormLogin></FormLogin>
                         </Route>
-                        <PrivateRoute  exact path="/frontendweb-karine-2122-CasDS98/messages">
+                        <PrivateRoute  exact path="/messages">
                           <Messages></Messages>
                         </PrivateRoute >
-                        <PrivateRoute  exact path="/frontendweb-karine-2122-CasDS98/friends">
+                        <PrivateRoute  exact path="/friends">
                           <Friends></Friends>
                         </PrivateRoute >
                         </div>
