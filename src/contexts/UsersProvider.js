@@ -14,7 +14,6 @@ export const UsersContext = createContext();
 export const useUsers = () => useContext(UsersContext);
 
 export const UsersProvider = ({ children }) => {
-  const [initialLoad, setInitialLoad] = useState(false);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [searchedUsers, setSearchedUsers] = useState([]);

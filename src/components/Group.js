@@ -1,4 +1,4 @@
-import { useEffect, memo, useCallback, useContext } from "react";
+import { memo, useCallback } from "react";
 import { useGroups } from "../contexts/GroupsProvider";
 import { useSocket } from "../contexts/SocketProvider";
 

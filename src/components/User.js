@@ -1,4 +1,4 @@
-import { useEffect, memo, useCallback, useContext } from "react";
+import {memo} from "react";
 
 
 const User = memo(({ id, user_name,email})  => {

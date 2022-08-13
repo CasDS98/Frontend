@@ -112,8 +112,7 @@ export const AuthProvider = ({
     try {
       setLoading(true);
       setError(null);
-      const { token, user } = await usersApi.register(data);
-      //await setSession(token, user);
+      await usersApi.register(data);
       return true;
     } catch (error) {
       setError(error);

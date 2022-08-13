@@ -21,7 +21,6 @@ export const MessagesProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
-  const [currentMessage, setCurrentMessage] = useState({});
   const { ready: authReady } = useSession();
   const {sendDeleteMessage, sendMessage, socket, isConnected} = useSocket();
   const {currentGroup} = useGroups();
@@ -65,7 +64,6 @@ export const MessagesProvider = ({ children }) => {
         const changedMessage  = await messagesApi.saveMessage({ user_id,
           group_id : currentGroup.id,
           message,});
-        //await refreshMessages();
         setMessages([...messages,changedMessage])
         //send message to socket
         sendMessage(changedMessage);
@@ -120,7 +118,6 @@ export const MessagesProvider = ({ children }) => {
     messages,
     error,
     loading,
-    currentMessage,
     createMessage,
     deleteMessage
   }),
@@ -128,7 +125,6 @@ export const MessagesProvider = ({ children }) => {
     messages,
     error,
     loading,
-    currentMessage,
     createMessage,
     deleteMessage
   ]

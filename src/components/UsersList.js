@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useCallback,useEffect } from "react";
+import React, { useMemo } from "react";
 import { useUsers } from "../contexts/UsersProvider";
 import { useFriends } from "../contexts/FriendsProvider";
 import { useSession } from '../contexts/AuthProvider';
