@@ -2,7 +2,7 @@
   "name": "webdevopdracht",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://hogent-web.github.io/frontendweb-karine-2122-CasDS98/",
   "dependencies": {
     "@craco/craco": "^6.4.0",
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
