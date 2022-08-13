@@ -59,7 +59,7 @@ export const GroupsProvider = ({ children }) => {
         setError();
         setLoading(true);
         
-        const groups = await groupsApi.getAllGroups(user.id);
+        const groups = await groupsApi.getAllGroups(user.id);     
         setGroups(groups);
       } catch (error) {
         setError(error);
@@ -112,9 +112,8 @@ export const GroupsProvider = ({ children }) => {
         setError();
         setLoading(true);
         try {
-          const group = groupsApi.saveGroup({name})
-
-          return group;
+          const group = await groupsApi.saveGroup({name})
+          setGroups([...groups,group])
         } catch (error) {
           console.log(error);
           throw error;
@@ -122,7 +121,7 @@ export const GroupsProvider = ({ children }) => {
           setLoading(false);
         }
       },
-      []
+      [groups]
     );
 
     const addMember = useCallback(
@@ -132,7 +131,6 @@ export const GroupsProvider = ({ children }) => {
         try {
           await groupsApi.addMember({group_id, user_id});
           sendAddMember();
-          await refreshGroups();
           await refreshMembers();
         } catch (error) {
           console.log(error);
@@ -141,7 +139,7 @@ export const GroupsProvider = ({ children }) => {
           setLoading(false);
         }
       },
-      [refreshGroups,refreshMembers,sendAddMember]
+      [refreshMembers,sendAddMember]
     );
 
     const deleteMember = useCallback(
@@ -151,8 +149,17 @@ export const GroupsProvider = ({ children }) => {
         try {
           await groupsApi.deleteMember({group_id, user_id});
           removeMember(user_id);
-          await refreshGroups();
-          await refreshMembers();
+          if(user_id === user.id)
+          {
+            setCurrentGroup(null);
+            setMembers(null);
+            await refreshGroups();
+          }
+          else{
+            await refreshMembers();
+          }
+         
+          
         } catch (error) {
           console.log(error);
           throw error;
@@ -160,7 +167,7 @@ export const GroupsProvider = ({ children }) => {
           setLoading(false);
         }
       },
-      [refreshGroups,refreshMembers,removeMember]
+      [refreshMembers,removeMember,refreshGroups,user]
     );
 
     const deleteGroup = useCallback(

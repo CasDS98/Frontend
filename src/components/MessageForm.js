@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import LabelInput from "./LabelInput";
 import { useSession } from '../contexts/AuthProvider';
+import { useGroups } from "../contexts/GroupsProvider";
 
 const validationRules = {
   message: {
@@ -13,6 +14,7 @@ const validationRules = {
 
 const MessageForm = ()  => {
   const { user } = useSession();
+  const {currentGroup} = useGroups();
 
   const methods = useForm();
   const {
@@ -51,6 +53,8 @@ const MessageForm = ()  => {
       <FormProvider {...methods}>
       <div  class="p-4 dark:bg-gray-800 ">
         <form class="flex flex-row" onSubmit={handleSubmit(onSubmit)}>
+       { currentGroup !== null ? (
+        <>
           <LabelInput
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg rounded-r-none focus:ring-blue-500 focus:border-blue-500  min-w-full  p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               label="message"
@@ -68,8 +72,11 @@ const MessageForm = ()  => {
               </span>
             </button>
   
-           
-        </form>
+            </>
+          ) :   
+          <>
+          </>}
+          </form>
         </div>
       </FormProvider>
     </div>

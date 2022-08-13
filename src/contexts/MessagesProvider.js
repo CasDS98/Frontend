@@ -23,7 +23,7 @@ export const MessagesProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [currentMessage, setCurrentMessage] = useState({});
   const { ready: authReady } = useSession();
-  const {sendMessage, socket, isConnected} = useSocket();
+  const {sendDeleteMessage, sendMessage, socket, isConnected} = useSocket();
   const {currentGroup} = useGroups();
 
   const refreshMessages = useCallback(async () => {
@@ -77,15 +77,39 @@ export const MessagesProvider = ({ children }) => {
         setLoading(false);
       }
     },
-    [sendMessage,messages]
+    [sendMessage,messages,currentGroup]
+  );
+
+  
+  const deleteMessage = useCallback(
+    async (message_id) => {
+      setError();
+      setLoading(true);
+      try {
+        await messagesApi.deleteMessage(message_id);
+        setMessages(messages.filter(message => message.id !== message_id))
+        sendDeleteMessage(message_id);
+      } catch (error) {
+        console.log(error);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [messages,sendDeleteMessage]
   );
 
   useEffect(() => {
     if(isConnected)
     {
       socket.on("receive_message", (data) => {
-        console.log("receiving message");
+        console.log("receive_message_MessageProvider");
         setMessages([...messages,data])
+      })
+
+      socket.on("receive_delete_message", (data) => {
+        console.log("receive_delete_message_MessageProvider");
+        setMessages(messages.filter(message => message.id !== data))
       })
     }
   })
@@ -98,6 +122,7 @@ export const MessagesProvider = ({ children }) => {
     loading,
     currentMessage,
     createMessage,
+    deleteMessage
   }),
   [
     messages,
@@ -105,6 +130,7 @@ export const MessagesProvider = ({ children }) => {
     loading,
     currentMessage,
     createMessage,
+    deleteMessage
   ]
 );
 

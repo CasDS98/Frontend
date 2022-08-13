@@ -71,6 +71,13 @@ export const SocketProvider = ({ children }) => {
     socket.emit('delete_group', messageContent)
   },[socket,room])
  
+  const sendDeleteMessage = useCallback(  async(id) => {
+    let messageContent = {
+      room : room,
+      id : id
+    }
+    socket.emit('delete_message', messageContent)
+  },[socket,room])
  
   const value = useMemo(
     () => ({
@@ -81,7 +88,8 @@ export const SocketProvider = ({ children }) => {
       sendDeleteUser,
       removeMember,
       sendAddMember,
-      sendDeleteGroup
+      sendDeleteGroup,
+      sendDeleteMessage
     }),
     [
       connectToRoom,
@@ -91,7 +99,8 @@ export const SocketProvider = ({ children }) => {
       sendDeleteUser,
       removeMember,
       sendAddMember,
-      sendDeleteGroup
+      sendDeleteGroup,
+      sendDeleteMessage
     ]
   );
 

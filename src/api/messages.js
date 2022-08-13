@@ -25,3 +25,7 @@ export const saveMessage = async ({
 	});
 	return data;
 };
+
+export const deleteMessage = async (id) => {
+	await axios.delete(`messages/${id}`);
+};

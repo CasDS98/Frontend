@@ -1,14 +1,18 @@
 import {useEffect, memo,useState } from "react";
 import { useSession } from '../contexts/AuthProvider';
 import {useUsers} from '../contexts/UsersProvider';
+import { useMessages } from "../contexts/MessagesProvider";
 
 const Message = memo(({ id, date_time, name, user, group, value})  => {
   const { user : userAuth,loading,error } = useSession();
   const { getUser } = useUsers();
   const [userInfo, setUserInfo] = useState("")
+  const {deleteMessage} = useMessages();
 
 
-
+  const deleteMessageFromGroup = (( message_id) => {
+    deleteMessage(message_id);
+  });
 
   useEffect( () => {
     const fetchUser = async () => {
@@ -45,10 +49,16 @@ const Message = memo(({ id, date_time, name, user, group, value})  => {
         { 
           userAuth.id === user ? (
             <div class="text-right">
-            <div class="p-2.5 inline-block text-sm text-gray-700 bg-gray-100 rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 dark:text-white" role="alert">
-              <p class="break-all">{value}</p>
+            <div class="flex flex-row-reverse">
+                <button onClick={() => {deleteMessageFromGroup(id)}} class="text-white p-2 rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
+                  X
+                </button>
+              <div class="p-2.5 inline-block text-sm text-gray-700 bg-gray-100 rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 dark:text-white" role="alert">
+                <p class="break-all">{value}</p>
+              </div>
             </div>
             <p class=" text-xs dark:text-gray-300 ">{new Date(date_time).toLocaleString()}</p>
+           
           </div>
           ) : (
             <div class="text-left">

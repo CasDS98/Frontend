@@ -51,7 +51,7 @@ const AddMemberList = () => {
             <User key={member.id} {...member}></User>
           </div>
           <button onClick={() => {inviteMember(member.id)}} class="block p-4 bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
-            <img src="/img/remove-user-svgrepo-com.svg" alt="delete" ></img>
+            <img src="/img/add-user-svgrepo-com.svg" alt="delete" ></img>
           </button>
        </div>
          
