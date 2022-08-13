@@ -37,19 +37,19 @@ function App() {
                       <NavMenu/>
                       <Switch>
                         <div className="App">
-                        <Route path="/problem-showcase" exact>
-                          <Redirect to="/problem-showcase/messages" />
+                        <Route path="/frontendweb-karine-2122-CasDS98" exact>
+                          <Redirect to="/frontendweb-karine-2122-CasDS98/messages" />
                         </Route>
-                        <Route exact path="/problem-showcase/register">
+                        <Route exact path="/frontendweb-karine-2122-CasDS98/register">
                           <Form></Form>
                         </Route>
-                        <Route exact path="/problem-showcase/login">
+                        <Route exact path="/frontendweb-karine-2122-CasDS98/login">
                           <FormLogin></FormLogin>
                         </Route>
-                        <PrivateRoute  exact path="/problem-showcase/messages">
+                        <PrivateRoute  exact path="/frontendweb-karine-2122-CasDS98/messages">
                           <Messages></Messages>
                         </PrivateRoute >
-                        <PrivateRoute  exact path="/problem-showcase/friends">
+                        <PrivateRoute  exact path="/frontendweb-karine-2122-CasDS98/friends">
                           <Friends></Friends>
                         </PrivateRoute >
                         </div>
