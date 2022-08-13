@@ -21,7 +21,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(()=>{
       console.log("CONNECT WITH SOCKET")
-      const s = io(config.connection_port);
+      const s = io(process.env.REACT_APP_BACKEND_CONNECTION_PORT || config.connection_port);
       setSocket(s);
       setIsConnected(true);
     
