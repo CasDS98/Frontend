@@ -11,7 +11,7 @@ jobs:
      runs-on: ubuntu-latest
      env:
       REACT_APP_BACKEND_BASE_URL: https://chatappwebdev.herokuapp.com/api/
-      REACT_APP_BACKEND_CONNECTION_PORT: https://chatappwebdev.herokuapp.com
+      REACT_APP_BACKEND_CONNECTION_PORT: https://chatappwebdev.herokuapp.com/
      steps:
        - name: Checkout 🛎️
          uses: actions/checkout@v2.3.1
