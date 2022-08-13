@@ -36,7 +36,6 @@ const MessageForm = ()  => {
           message: data.message,
         });
         reset();
-        //setMessage("");
       } catch (error) {
         console.error(error);
       }

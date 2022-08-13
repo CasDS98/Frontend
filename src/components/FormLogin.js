@@ -46,7 +46,7 @@ const FormLogin = () => {
    
     <div className="form-container">
     <div className="form-content-left">
-      <img src="/img/chat-svgrepo-com.svg" alt="" className="form-img"></img>
+      <img src="/frontendweb-karine-2122-CasDS98/img/chat-svgrepo-com.svg" alt="" className="form-img"></img>
     </div>
     <div className="form-content-right">
     <FormProvider {...methods}>

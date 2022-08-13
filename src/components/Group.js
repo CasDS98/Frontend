@@ -25,7 +25,7 @@ const Group = memo(({ id, name})  => {
         <p class="truncate text-left font-normal text-gray-700 dark:text-gray-400">last message</p>
       </button>
       <button onClick={() => {remove()}} class="block p-6 bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
-        <img src="/img/chat-delete-svgrepo-com.svg" alt="delete" ></img>
+        <img src="/frontendweb-karine-2122-CasDS98/img/chat-delete-svgrepo-com.svg" alt="delete" ></img>
       </button>
  </div>
 

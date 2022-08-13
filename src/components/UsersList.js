@@ -66,12 +66,12 @@ const UsersList = () => {
                     <div class="grid  p-2 col-span-4"><User key={user.id} {...user}></User> </div>
                   }
                 <button onClick={() => {addFriend(user.id)}} class="block p-5 w-full bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
-                  <img src="/img/add-user-svgrepo-com.svg" alt="delete" ></img>
+                  <img src="/frontendweb-karine-2122-CasDS98/img/add-user-svgrepo-com.svg" alt="delete" ></img>
                 </button>
                 {hasRole("admin") ? (
                   <>
                     <button onClick={() => {deleteUserFromApp(user.id)}} class="block p-5 w-full bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
-                        <img src="/img/delete-svgrepo-com.svg" alt="delete" ></img>
+                        <img src="/frontendweb-karine-2122-CasDS98/img/delete-svgrepo-com.svg" alt="delete" ></img>
                     </button>
                   </>
                   ) :   
