@@ -54,12 +54,11 @@ export const GroupsProvider = ({ children }) => {
 
     const refreshGroups = useCallback(async () => {
       console.log("Refresh groups");
-      console.log(user);
       try {
         setError();
         setLoading(true);
-        
-        const groups = await groupsApi.getAllGroups(user.id);     
+        const groups = await groupsApi.getAllGroups(user.id); 
+        console.log(groups);    
         setGroups(groups);
       } catch (error) {
         setError(error);
@@ -114,6 +113,7 @@ export const GroupsProvider = ({ children }) => {
         try {
           const group = await groupsApi.saveGroup({name})
           setGroups([...groups,group])
+          return group;
         } catch (error) {
           console.log(error);
           throw error;
@@ -131,7 +131,7 @@ export const GroupsProvider = ({ children }) => {
         try {
           await groupsApi.addMember({group_id, user_id});
           sendAddMember();
-          await refreshMembers();
+          if(user_id !== user.id) await refreshMembers();
         } catch (error) {
           console.log(error);
           throw error;
@@ -139,7 +139,7 @@ export const GroupsProvider = ({ children }) => {
           setLoading(false);
         }
       },
-      [refreshMembers,sendAddMember]
+      [refreshMembers,sendAddMember,user]
     );
 
     const deleteMember = useCallback(
