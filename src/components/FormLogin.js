@@ -65,6 +65,7 @@ const FormLogin = () => {
               placeholder="Enter your email"
               validation={validationRules.email}
               data-cy="email_input_login"
+              showError="true"
             />
 
             <LabelInput
@@ -73,6 +74,7 @@ const FormLogin = () => {
               placeholder="Enter your password"
               validation={validationRules.password}
               data-cy="password_input_login"
+              showError="true"
             />
        
            

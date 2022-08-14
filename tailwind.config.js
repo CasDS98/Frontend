@@ -5,7 +5,7 @@ module.exports = {
     extend: {
 
       gridTemplateRows: {
-        'message': '100px 1fr 75px',
+        'message': '100px 1fr 100px',
         'members': '1fr 100px 1fr',
       },
 

@@ -85,13 +85,15 @@ function FormSignup() {
               placeholder="Enter your username"
               validation={validationRules.username}
               data-cy="username_input_login"
+              showError="true"
             />
             <LabelInput
               label="Email"
               type="email"
               placeholder="Enter your email"
-
               data-cy="email_input_login"
+              validation={validationRules.email}
+              showError="true"
             />
 
             <LabelInput
@@ -103,6 +105,7 @@ function FormSignup() {
               onChange={
                 event => password2 = event.target.value
               }
+              showError="true"
             />
 
             <LabelInput
@@ -111,7 +114,7 @@ function FormSignup() {
               placeholder="Enter your password again"
               validation={validationRules.password2}
               data-cy="password2_input_login"
-
+              showError="true"
             />
            
             <button className="form-input-btn" type="submit">Sign Up</button>

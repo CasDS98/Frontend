@@ -30,7 +30,7 @@ export default function messages() {
           <div class="scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-600 overflow-y-scroll">
               <MemberList></MemberList>
           </div>
-          <h1 class="text-left p-6 mb-2 text-4xl border-t-2 border-b-2 font-bold tracking-tight text-gray-900 dark:text-white dark:border-gray-700">Add Members</h1>
+          <h1 class="text-left p-6 mb-2 text-4xl border-t-2 border-b-2 font-bold tracking-tight text-gray-900 dark:text-white dark:border-gray-700">Add&nbsp;Members</h1>
           <div class="scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-600 overflow-y-scroll">
              <AddMemberList></AddMemberList>
           </div>
