@@ -19,12 +19,11 @@ const Group = memo(({ id, name})  => {
  
   return(
 
-    <div  class="grid grid-cols-5  border rounded-lg dark:border-gray-700">
-      <button onClick={() => {selectGroup()}} class="col-span-4 p-2 rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800  dark:hover:bg-gray-700">
-        <h5 class="truncate text-left mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{name}</h5>
-        <p class="truncate text-left font-normal text-gray-700 dark:text-gray-400">last message</p>
+    <div data-cy="group" class="grid grid-cols-5  border rounded-lg dark:border-gray-700">
+      <button data-cy="btn_select_group" onClick={() => {selectGroup()}} class="col-span-4 p-2 rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800  dark:hover:bg-gray-700">
+        <h5 data-cy="group_name" class="truncate text-left mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{name}</h5>
       </button>
-      <button onClick={() => {remove()}} class="block p-6 bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
+      <button data-cy="btn_group_delete" onClick={() => {remove()}} class="block p-6 bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
         <img src="/frontendweb-karine-2122-CasDS98/img/chat-delete-svgrepo-com.svg" alt="delete" ></img>
       </button>
  </div>

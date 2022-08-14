@@ -48,25 +48,25 @@ const Message = memo(({ id, date_time, name, user, group, value})  => {
       <>
         { 
           userAuth.id === user ? (
-            <div class="text-right">
+            <div data-cy="message" class="text-right">
             <div class="flex flex-row-reverse">
-                <button onClick={() => {deleteMessageFromGroup(id)}} class="text-white p-2 rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
+                <button data-cy="btn_msg_remove" onClick={() => {deleteMessageFromGroup(id)}} class="text-white p-2 rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
                   X
                 </button>
               <div class="p-2.5 inline-block text-sm text-gray-700 bg-gray-100 rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 dark:text-white" role="alert">
-                <p class="break-all">{value}</p>
+                <p data-cy="message_content" class="break-all">{value}</p>
               </div>
             </div>
-            <p class=" text-xs dark:text-gray-300 ">{new Date(date_time).toLocaleString()}</p>
+            <p data-cy="message_date" class=" text-xs dark:text-gray-300 ">{new Date(date_time).toLocaleString()}</p>
            
           </div>
           ) : (
-            <div class="text-left">
-            <p class=" text-xs dark:text-gray-300 ">{userInfo.user_name}</p>
+            <div data-cy="message" class="text-left">
+              <p data-cy="message_user" class=" text-xs dark:text-gray-300 ">{userInfo.user_name}</p>
             <div class="p-2.5 inline-block text-sm text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-700 dark:text-white" role="alert">
-              <p class="break-all">{value}</p>
+              <p data-cy="message_content" class="break-all">{value}</p>
             </div>
-            <p class=" text-xs dark:text-gray-300 ">{new Date(date_time).toLocaleString()}</p>
+            <p data-cy="message_date" class=" text-xs dark:text-gray-300 ">{new Date(date_time).toLocaleString()}</p>
           </div>
           )
         }

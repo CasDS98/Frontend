@@ -33,10 +33,10 @@ const MemberList = () => {
       <>
       {allMembers.map((member) => {return (
          <div  class="grid grid-cols-5  border rounded-lg dark:border-gray-700 ">
-            <div  class="col-span-4 p-2">
+            <div data-cy="member" class="col-span-4 p-2">
               <User key={member.id} {...member}></User>
             </div>
-            <button onClick={() => {removeMember(member.id)}} class="block p-4 bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
+            <button data-cy="btn_remove_member" onClick={() => {removeMember(member.id)}} class="block p-4 bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-700  dark:hover:bg-gray-900">
               <img src="/frontendweb-karine-2122-CasDS98/img/remove-user-svgrepo-com.svg" alt="delete" ></img>
             </button>
          </div>

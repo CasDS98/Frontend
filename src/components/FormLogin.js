@@ -76,7 +76,7 @@ const FormLogin = () => {
             />
        
            
-            <button className="form-input-btn" disabled={loading} type="submit">Login</button>
+            <button data-cy="btn_submit_login" className="form-input-btn" disabled={loading} type="submit">Login</button>
       
             <span className="form-input-login">Not registered? Register <Link to="/register">here</Link></span>
       </form>
