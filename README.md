@@ -68,3 +68,21 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## gebruik app
+# Online:
+URL: https://hogent-web.github.io/frontendweb-karine-2122-CasDS98/#/frontendweb-karine-2122-CasDS98
+
+# Lokaal:
+Eerst yarn install command uitvoeren.
+Zorg dat de back end lokaal draait. (zie document web services)
+
+
+# Inloggegevens:
+Admin account:
+Email: test1@hotmail.com
+Paswoord: 12345678
+
+User account:
+Email: test2@hotmail.com
+Paswoord: 12345678
